@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://cluyc22bda4y5"]
+
+[ext_resource type="Script" uid="uid://4h1ectq21npx" path="res://Scripts/CardManager.gd" id="1_kln2b"]
+[ext_resource type="Script" uid="uid://b64ajk8avqsih" path="res://Scripts/PlayerHand.gd" id="2_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://bhoal1p2e3xs3" path="res://Scenes/CardSlot.tscn" id="3_pbw6q"]
+[ext_resource type="PackedScene" uid="uid://c8djftd5iclyn" path="res://Scenes/Deck.tscn" id="4_pbw6q"]
+[ext_resource type="Script" uid="uid://b1k8i6cxuy4fb" path="res://Scripts/MagicCardSlot.gd" id="4_v1gob"]
+[ext_resource type="PackedScene" uid="uid://3whmf7kl68n0" path="res://Scenes/EnemyCardSlot.tscn" id="5_jw32o"]
+[ext_resource type="Script" uid="uid://dve0ly6t0p88a" path="res://Scenes/InputManager.gd" id="6_v1gob"]
+[ext_resource type="Script" uid="uid://sps5qf003sl4" path="res://Scenes/BattleManager.gd" id="8_50glp"]
+[ext_resource type="Script" uid="uid://ctwkfp61p8ux" path="res://Scripts/OpponentDeck.gd" id="8_bmxlf"]
+[ext_resource type="Script" uid="uid://detiu8d3ri3fk" path="res://Scripts/EnemyHand.gd" id="10_4kpch"]
+
+[node name="Main" type="Node2D" unique_id=1088991673]
+
+[node name="CardManager" type="Node2D" parent="." unique_id=95705152]
+script = ExtResource("1_kln2b")
+
+[node name="PlayerHand" type="Node2D" parent="." unique_id=296141373]
+script = ExtResource("2_rgh2o")
+
+[node name="CardSlots" type="Node2D" parent="." unique_id=1053082474]
+
+[node name="CardSlot1" parent="CardSlots" unique_id=1154617669 instance=ExtResource("3_pbw6q")]
+position = Vector2(960, 750)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot2" parent="CardSlots" unique_id=2022042159 instance=ExtResource("3_pbw6q")]
+position = Vector2(760, 750)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot7" parent="CardSlots" unique_id=2105506500 instance=ExtResource("3_pbw6q")]
+position = Vector2(660, 750)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot3" parent="CardSlots" unique_id=148029599 instance=ExtResource("3_pbw6q")]
+position = Vector2(860, 750)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot4" parent="CardSlots" unique_id=1812103009 instance=ExtResource("3_pbw6q")]
+position = Vector2(1060, 750)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot5" parent="CardSlots" unique_id=1608152686 instance=ExtResource("3_pbw6q")]
+position = Vector2(1160, 750)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot6" parent="CardSlots" unique_id=1133593422 instance=ExtResource("3_pbw6q")]
+position = Vector2(1260, 750)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot8" parent="CardSlots" unique_id=613787668 instance=ExtResource("3_pbw6q")]
+position = Vector2(960, 608)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot9" parent="CardSlots" unique_id=850457007 instance=ExtResource("3_pbw6q")]
+position = Vector2(760, 608)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot10" parent="CardSlots" unique_id=137358611 instance=ExtResource("3_pbw6q")]
+position = Vector2(660, 608)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot11" parent="CardSlots" unique_id=1040725635 instance=ExtResource("3_pbw6q")]
+position = Vector2(860, 608)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot12" parent="CardSlots" unique_id=1371833027 instance=ExtResource("3_pbw6q")]
+position = Vector2(1060, 608)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot13" parent="CardSlots" unique_id=630320509 instance=ExtResource("3_pbw6q")]
+position = Vector2(1160, 608)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot14" parent="CardSlots" unique_id=616985243 instance=ExtResource("3_pbw6q")]
+position = Vector2(1260, 608)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot1" parent="CardSlots" unique_id=1802314396 instance=ExtResource("5_jw32o")]
+position = Vector2(960, 388)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot2" parent="CardSlots" unique_id=2012650756 instance=ExtResource("5_jw32o")]
+position = Vector2(860, 388)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot3" parent="CardSlots" unique_id=1079238392 instance=ExtResource("5_jw32o")]
+position = Vector2(760, 388)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot4" parent="CardSlots" unique_id=400616414 instance=ExtResource("5_jw32o")]
+position = Vector2(660, 388)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot5" parent="CardSlots" unique_id=1470952703 instance=ExtResource("5_jw32o")]
+position = Vector2(1060, 388)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot6" parent="CardSlots" unique_id=493877094 instance=ExtResource("5_jw32o")]
+position = Vector2(1160, 388)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot7" parent="CardSlots" unique_id=1835564883 instance=ExtResource("5_jw32o")]
+position = Vector2(1260, 388)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot8" parent="CardSlots" unique_id=1164963215 instance=ExtResource("5_jw32o")]
+position = Vector2(960, 250)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot9" parent="CardSlots" unique_id=1700787960 instance=ExtResource("5_jw32o")]
+position = Vector2(860, 250)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot10" parent="CardSlots" unique_id=1480436383 instance=ExtResource("5_jw32o")]
+position = Vector2(760, 250)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot11" parent="CardSlots" unique_id=1258687813 instance=ExtResource("5_jw32o")]
+position = Vector2(660, 250)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot12" parent="CardSlots" unique_id=1159985893 instance=ExtResource("5_jw32o")]
+position = Vector2(1060, 250)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot13" parent="CardSlots" unique_id=1267240071 instance=ExtResource("5_jw32o")]
+position = Vector2(1160, 250)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot14" parent="CardSlots" unique_id=1566934688 instance=ExtResource("5_jw32o")]
+position = Vector2(1260, 250)
+scale = Vector2(0.8, 0.8)
+
+[node name="Deck" parent="." unique_id=1811994010 instance=ExtResource("4_pbw6q")]
+position = Vector2(140, 954)
+scale = Vector2(0.8, 0.8)
+
+[node name="InputManager" type="Node2D" parent="." unique_id=2145062231]
+script = ExtResource("6_v1gob")
+
+[node name="EndTurnButton" type="Button" parent="." unique_id=1107997511]
+offset_left = 200.0
+offset_top = 570.0
+offset_right = 278.0
+offset_bottom = 601.0
+text = "End Turn"
+
+[node name="OpponentDeck" type="Node2D" parent="." unique_id=2121959359]
+script = ExtResource("8_bmxlf")
+
+[node name="Deck" parent="OpponentDeck" unique_id=649012564 instance=ExtResource("4_pbw6q")]
+position = Vector2(1574.9999, 118.00006)
+rotation = 3.1415927
+scale = Vector2(0.8, 0.8)
+script = null
+
+[node name="CollisionShape2D" parent="OpponentDeck/Deck/Area2D" parent_id_path=PackedInt32Array(649012564, 1181846784) index="0" unique_id=1679107122]
+disabled = true
+
+[node name="CardCountText" parent="OpponentDeck/Deck" index="2" unique_id=94965244]
+offset_left = 56.249817
+offset_top = 78.75006
+offset_right = 94.24982
+offset_bottom = 117.75006
+rotation = 3.1415927
+horizontal_alignment = 0
+vertical_alignment = 0
+
+[node name="BattleManager" type="Node" parent="." unique_id=683708051]
+script = ExtResource("8_50glp")
+
+[node name="BattleTimer" type="Timer" parent="." unique_id=2004391557]
+
+[node name="EnemyHand" type="Node2D" parent="." unique_id=1450533850]
+script = ExtResource("10_4kpch")
+
+[connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
+
+[editable path="OpponentDeck/Deck"]

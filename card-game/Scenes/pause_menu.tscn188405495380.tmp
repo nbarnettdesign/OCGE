@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://codvab1yd7rax"]
+
+[ext_resource type="Script" uid="uid://c7m86ij2q21s7" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=774555245]
+process_mode = 3
+script = ExtResource("1_emv3i")
+in_battle = null
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1634987477]
+offset_right = 1923.0
+offset_bottom = 1084.0
+color = Color(0, 0, 0, 0.70980394)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=2147248643]
+offset_right = 1922.0
+offset_bottom = 1085.0
+
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1542083193]
+layout_mode = 2
+
+[node name="MainPage" type="VBoxContainer" parent="Center/Panel" unique_id=1881398002]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Center/Panel/MainPage" unique_id=989237140]
+layout_mode = 2
+text = "paused"
+
+[node name="ResumeButton" type="Button" parent="Center/Panel/MainPage" unique_id=770165679]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume"
+
+[node name="SaveButton" type="Button" parent="Center/Panel/MainPage" unique_id=418745101]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Save"
+
+[node name="SettingsButton" type="Button" parent="Center/Panel/MainPage" unique_id=1279413783]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitMenuButton" type="Button" parent="Center/Panel/MainPage" unique_id=116826752]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[node name="QuitDesktopButton" type="Button" parent="Center/Panel/MainPage" unique_id=977928404]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SettingsPage" type="VBoxContainer" parent="Center/Panel" unique_id=1440718367]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Center/Panel/SettingsPage" unique_id=458000637]
+layout_mode = 2
+text = "Settings"
+
+[node name="Volume" type="HBoxContainer" parent="Center/Panel/SettingsPage" unique_id=233073119]
+layout_mode = 2
+
+[node name="Volume" type="Label" parent="Center/Panel/SettingsPage/Volume" unique_id=297490725]
+layout_mode = 2
+text = "Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="Center/Panel/SettingsPage/Volume" unique_id=2100110856]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="FullscreenCheck" type="CheckButton" parent="Center/Panel/SettingsPage" unique_id=1685874483]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Center/Panel/SettingsPage" unique_id=253916706]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ConfirmBialog" type="ConfirmationDialog" parent="." unique_id=1369992093]
+unique_name_in_owner = true

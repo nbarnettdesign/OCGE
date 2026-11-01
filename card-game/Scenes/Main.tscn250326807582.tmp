@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cluyc22bda4y5"]
+
+[ext_resource type="Script" uid="uid://4h1ectq21npx" path="res://Scripts/CardManager.gd" id="1_kln2b"]
+[ext_resource type="Script" uid="uid://b64ajk8avqsih" path="res://Scripts/PlayerHand.gd" id="2_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://bhoal1p2e3xs3" path="res://Scenes/CardSlot.tscn" id="3_pbw6q"]
+[ext_resource type="Script" uid="uid://2q7qxv72ph8y" path="res://Scenes/Deck.gd" id="4_pbw6q"]
+[ext_resource type="Texture2D" uid="uid://dgcdcjsx070oa" path="res://CardSprites/Cards_back.png" id="5_v1gob"]
+[ext_resource type="Script" uid="uid://dve0ly6t0p88a" path="res://Scenes/InputManager.gd" id="6_v1gob"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0201s"]
+size = Vector2(112, 158)
+
+[node name="Main" type="Node2D" unique_id=1088991673]
+
+[node name="CardManager" type="Node2D" parent="." unique_id=95705152]
+script = ExtResource("1_kln2b")
+
+[node name="PlayerHand" type="Node2D" parent="." unique_id=296141373]
+script = ExtResource("2_rgh2o")
+
+[node name="CardSlots" type="Node2D" parent="." unique_id=1053082474]
+
+[node name="CardSlot1" parent="CardSlots" unique_id=1154617669 instance=ExtResource("3_pbw6q")]
+position = Vector2(200, 350)
+
+[node name="CardSlot2" parent="CardSlots" unique_id=2022042159 instance=ExtResource("3_pbw6q")]
+position = Vector2(350, 350)
+
+[node name="CardSlot3" parent="CardSlots" unique_id=148029599 instance=ExtResource("3_pbw6q")]
+position = Vector2(500, 350)
+
+[node name="CardSlot4" parent="CardSlots" unique_id=1812103009 instance=ExtResource("3_pbw6q")]
+position = Vector2(650, 350)
+
+[node name="CardSlot5" parent="CardSlots" unique_id=1608152686 instance=ExtResource("3_pbw6q")]
+position = Vector2(800, 350)
+
+[node name="CardSlot6" parent="CardSlots" unique_id=1133593422 instance=ExtResource("3_pbw6q")]
+position = Vector2(950, 350)
+
+[node name="Deck" type="Node2D" parent="." unique_id=756982170]
+position = Vector2(150, 890)
+script = ExtResource("4_pbw6q")
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck" unique_id=684446737]
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("5_v1gob")
+
+[node name="Area2D" type="Area2D" parent="Deck" unique_id=308318546]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Deck/Area2D" unique_id=1686020078]
+shape = SubResource("RectangleShape2D_0201s")
+
+[node name="InputManager" type="Node2D" parent="." unique_id=2145062231]
+script = ExtResource("6_v1gob")

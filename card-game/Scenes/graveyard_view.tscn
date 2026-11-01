@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/graveyard_view.gd" id="1_gy"]
+
+[node name="GraveyardView" type="CanvasLayer"]
+process_mode = 3
+layer = 15
+script = ExtResource("1_gy")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Margin" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 48
+
+[node name="Columns" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Left" type="VBoxContainer" parent="Margin/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleLabel" type="Label" parent="Margin/Columns/Left"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "Graveyard"
+
+[node name="Scroll" type="ScrollContainer" parent="Margin/Columns/Left"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CardsBox" type="HFlowContainer" parent="Margin/Columns/Left/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+
+[node name="EmptyLabel" type="Label" parent="Margin/Columns/Left"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Nothing here yet"
+
+[node name="Right" type="VBoxContainer" parent="Margin/Columns"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="PreviewArt" type="TextureRect" parent="Margin/Columns/Right"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 360)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PreviewText" type="Label" parent="Margin/Columns/Right"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="Margin/Columns/Right"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+text = "Close"

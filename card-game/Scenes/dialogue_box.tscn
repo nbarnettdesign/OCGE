@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://cni0evy5yl0g6"]
+
+[ext_resource type="Script" uid="uid://ca6ye8kyknnt6" path="res://Scripts/dialogue_box.gd" id="1_dlg"]
+
+[node name="DialogueBox" type="CanvasLayer" unique_id=923633032]
+process_mode = 3
+layer = 10
+script = ExtResource("1_dlg")
+
+[node name="PlayerPortrait" type="TextureRect" parent="." unique_id=1101279965]
+unique_name_in_owner = true
+offset_left = 37.0
+offset_top = 270.0
+offset_right = 584.0
+offset_bottom = 986.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NPCPortrait" type="TextureRect" parent="." unique_id=99465208]
+unique_name_in_owner = true
+offset_left = 1356.0
+offset_top = 245.0
+offset_right = 1868.0
+offset_bottom = 961.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=953056707]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = -230.0
+offset_right = -48.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=2127073437]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin" unique_id=416970128]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpeakerLabel" type="Label" parent="Panel/Margin/VBox" unique_id=1442904733]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Name"
+
+[node name="TextLabel" type="RichTextLabel" parent="Panel/Margin/VBox" unique_id=2123068107]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+scroll_active = false
+
+[node name="ChoiceRow" type="HBoxContainer" parent="Panel/Margin/VBox" unique_id=181679920]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+alignment = 2
+
+[node name="HintLabel" type="Label" parent="Panel/Margin/VBox" unique_id=1448103216]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "▼"
+horizontal_alignment = 2

@@ -1,0 +1,258 @@
+[gd_scene format=3 uid="uid://dib48nu676axw"]
+
+[ext_resource type="Script" uid="uid://c6opk3gumrxpq" path="res://Scripts/Binder.gd" id="1_binder"]
+[ext_resource type="PackedScene" uid="uid://bck22ex12m2ok" path="res://Scenes/binder_card.tscn" id="2_card"]
+[ext_resource type="Script" uid="uid://4m88xrcvcf1l" path="res://Scripts/deck_list.gd" id="3_ipfnr"]
+[ext_resource type="Texture2D" uid="uid://dgcdcjsx070oa" path="res://CardSprites/Cards_back.png" id="4_simmv"]
+
+[node name="Binder" type="Control" unique_id=715463399]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_binder")
+card_scene = ExtResource("2_card")
+cards_per_page = 12
+
+[node name="Background" type="ColorRect" parent="." unique_id=297187467]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.14, 1)
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=2071781964]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Columns" type="HBoxContainer" parent="Margin" unique_id=1447682548]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Collection" type="VBoxContainer" parent="Margin/Columns" unique_id=1126697705]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.4
+
+[node name="Header" type="HBoxContainer" parent="Margin/Columns/Collection" unique_id=1472758032]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Margin/Columns/Collection/Header" unique_id=368823839]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Binder"
+
+[node name="FilterMenu" type="OptionButton" parent="Margin/Columns/Collection/Header" unique_id=761890937]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Margin/Columns/Collection" unique_id=406989842]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Grid" type="GridContainer" parent="Margin/Columns/Collection/Scroll" unique_id=1460616188]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="Side" type="VBoxContainer" parent="Margin/Columns" unique_id=2003592905]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Preview" type="HBoxContainer" parent="Margin/Columns/Side" unique_id=1741982252]
+layout_mode = 2
+
+[node name="PreviewArt" type="TextureRect" parent="Margin/Columns/Side/Preview" unique_id=2002535362]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 280)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TransformBox" type="VBoxContainer" parent="Margin/Columns/Side/Preview" unique_id=405327316]
+layout_mode = 2
+accessibility_region = true
+
+[node name="TransformLabel" type="Label" parent="Margin/Columns/Side/Preview/TransformBox" unique_id=2098256495]
+layout_mode = 2
+text = "Transforms into"
+horizontal_alignment = 1
+
+[node name="TransformArt" type="TextureRect" parent="Margin/Columns/Side/Preview/TransformBox" unique_id=1799660907]
+custom_minimum_size = Vector2(150, 210)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TransformName" type="Label" parent="Margin/Columns/Side/Preview/TransformBox" unique_id=1533222737]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="PreviewText" type="Label" parent="Margin/Columns/Side/Preview" unique_id=639552665]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Hover a card to see it"
+autowrap_mode = 3
+
+[node name="DeckNameEdit" type="LineEdit" parent="Margin/Columns/Side" unique_id=1334907956]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Deck name"
+
+[node name="SavedDecks" type="OptionButton" parent="Margin/Columns/Side" unique_id=333963490]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DeckButtons" type="HBoxContainer" parent="Margin/Columns/Side" unique_id=223538254]
+layout_mode = 2
+
+[node name="LoadButton" type="Button" parent="Margin/Columns/Side/DeckButtons" unique_id=1200840476]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="SaveButton" type="Button" parent="Margin/Columns/Side/DeckButtons" unique_id=1870139748]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="NewButton" type="Button" parent="Margin/Columns/Side/DeckButtons" unique_id=1615351198]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "New"
+
+[node name="DeleteButton" type="Button" parent="Margin/Columns/Side/DeckButtons" unique_id=917861707]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Delete"
+
+[node name="DeckList" type="ItemList" parent="Margin/Columns/Side" unique_id=163649240]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_ipfnr")
+
+[node name="StatusLabel" type="Label" parent="Margin/Columns/Side" unique_id=1589373006]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 cards"
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="Margin/Columns/Side" unique_id=130027397]
+layout_mode = 2
+
+[node name="NpcMenu" type="OptionButton" parent="Margin/Columns/Side" unique_id=1153296866]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NpcInfo" type="Label" parent="Margin/Columns/Side" unique_id=1042097398]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Opponent info"
+autowrap_mode = 3
+
+[node name="BattleButton" type="Button" parent="Margin/Columns/Side" unique_id=1923829261]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Battle!"
+
+[node name="BackButton" type="Button" parent="." unique_id=1897643740]
+layout_mode = 0
+offset_left = 896.0
+offset_top = 959.0
+offset_right = 1076.0
+offset_bottom = 1065.0
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="UnsavedDialog" type="ConfirmationDialog" parent="." unique_id=468940960]
+unique_name_in_owner = true
+ok_button_text = "Yes"
+
+[node name="SearchEdit" type="LineEdit" parent="." unique_id=971484174]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 193.0
+offset_top = 38.0
+offset_right = 376.0
+offset_bottom = 69.0
+placeholder_text = "Search Cards...."
+
+[node name="PrevPageButton" type="Button" parent="." unique_id=803254562]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 930.0
+offset_top = 367.0
+offset_right = 980.0
+offset_bottom = 420.0
+text = "<"
+
+[node name="NextPageButton" type="Button" parent="." unique_id=1874411645]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 991.0
+offset_top = 367.0
+offset_right = 1041.0
+offset_bottom = 420.0
+text = ">"
+
+[node name="PageLabel" type="Label" parent="." unique_id=292524823]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 927.0
+offset_top = 436.0
+offset_right = 1065.0
+offset_bottom = 504.0
+
+[node name="SleeveMenu" type="OptionButton" parent="." unique_id=1647139542]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1006.0
+offset_top = 675.0
+offset_right = 1038.0
+offset_bottom = 695.0
+
+[node name="SleevePreview" type="TextureRect" parent="." unique_id=967144016]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 956.0
+offset_top = 730.0
+offset_right = 1083.0
+offset_bottom = 907.0
+texture = ExtResource("4_simmv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=2085141853]
+layout_mode = 0
+offset_left = 958.0
+offset_top = 643.0
+offset_right = 1080.0
+offset_bottom = 666.0
+text = "Current Sleeves"

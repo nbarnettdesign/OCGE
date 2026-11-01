@@ -1,0 +1,314 @@
+[gd_scene format=3 uid="uid://dbfvlohyvqnd4"]
+
+[ext_resource type="Script" uid="uid://cj4ry3noh20gm" path="res://Scripts/OpponentCard.gd" id="1_7qsxp"]
+[ext_resource type="Texture2D" uid="uid://dgcdcjsx070oa" path="res://CardSprites/Cards_back.png" id="2_dtw7n"]
+[ext_resource type="Texture2D" uid="uid://di2ipuj61au8r" path="res://CardSprites/Cards_MikeTiredson.png" id="3_7qsxp"]
+[ext_resource type="PackedScene" uid="uid://buthov533bju7" path="res://Scenes/card_effects.tscn" id="4_dtw7n"]
+
+[sub_resource type="Animation" id="Animation_brehn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardImageBack:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.22, 0.22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardImageBack:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CardImage:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.22, 0.22)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CardImage:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [-1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Transform:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_wf8id"]
+resource_name = "card_flip"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardImageBack:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.22, 0.22), Vector2(0.01, 0.286), Vector2(0.22, 0.22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardImageBack:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.10002215, 0.101),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 0, -1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CardImage:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.22, 0.22), Vector2(0.01, 0.286), Vector2(0.22, 0.22)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CardImage:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.10002215, 0.101),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [-1, -1, 0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Transform:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.100373104, 0.10072406, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1), Vector2(1e-05, 1), Vector2(0.004, 1.3), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_brehn"]
+_data = {
+&"RESET": SubResource("Animation_brehn"),
+&"card_flip": SubResource("Animation_wf8id")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0201s"]
+size = Vector2(112.5, 157.5)
+
+[node name="Card" type="Node2D" unique_id=1110503771]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_7qsxp")
+
+[node name="CardImageBack" type="Sprite2D" parent="." unique_id=2115678505 groups=["card_back"]]
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("2_dtw7n")
+
+[node name="CardImage" type="Sprite2D" parent="." unique_id=1434250017]
+z_index = -1
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("3_7qsxp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1104254353]
+libraries/ = SubResource("AnimationLibrary_brehn")
+
+[node name="Transform" type="Node2D" parent="." unique_id=2133588933]
+scale = Vector2(1e-05, 1)
+
+[node name="AttackTextMagic" type="RichTextLabel" parent="Transform" unique_id=2113904548]
+offset_left = 25.0
+offset_top = 61.0
+offset_right = 41.0
+offset_bottom = 77.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 11
+text = "0"
+vertical_alignment = 2
+
+[node name="ManaMagic" type="RichTextLabel" parent="Transform" unique_id=152969233]
+offset_left = 46.0
+offset_top = -85.0
+offset_right = 84.0
+offset_bottom = -51.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 17
+text = "0"
+vertical_alignment = 2
+
+[node name="HealthTextMagic" type="RichTextLabel" parent="Transform" unique_id=2087285915]
+offset_left = 36.0
+offset_top = 60.0
+offset_right = 54.0
+offset_bottom = 77.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 11
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AbilityTextMagic" type="RichTextLabel" parent="Transform" unique_id=62505486]
+offset_left = -53.75
+offset_top = 8.750008
+offset_right = 54.249985
+offset_bottom = 50.00001
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+
+[node name="AttackTextMonster1" type="RichTextLabel" parent="Transform" unique_id=106907706]
+offset_left = 26.0
+offset_top = 21.0
+offset_right = 76.0
+offset_bottom = 49.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 20
+text = "15"
+horizontal_alignment = 1
+
+[node name="AttackTextMonster2" type="RichTextLabel" parent="Transform" unique_id=2115382177]
+offset_left = 26.0
+offset_top = 40.0
+offset_right = 78.0
+offset_bottom = 68.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 20
+text = "15"
+horizontal_alignment = 1
+
+[node name="ManaMonster" type="RichTextLabel" parent="Transform" unique_id=942734615]
+offset_left = -54.999992
+offset_top = -111.25
+offset_right = -16.999992
+offset_bottom = -77.25
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 5
+text = "0"
+vertical_alignment = 2
+
+[node name="HealthTextMonster" type="RichTextLabel" parent="Transform" unique_id=378405033]
+offset_left = 25.0
+offset_top = -82.0
+offset_right = 65.0
+offset_bottom = -48.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 18
+text = "100"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AbilityTextMonster" type="RichTextLabel" parent="Transform" unique_id=1637937939]
+offset_left = -41.0
+offset_top = 13.0
+offset_right = 13.0
+offset_bottom = 51.0
+mouse_force_pass_scroll_events = false
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 7
+scroll_active = false
+
+[node name="AttackTextSport" type="RichTextLabel" parent="Transform" unique_id=221890120]
+offset_left = 3.0
+offset_top = 64.0
+offset_right = 61.5
+offset_bottom = 80.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 11
+text = "0"
+vertical_alignment = 2
+
+[node name="ManaSport" type="RichTextLabel" parent="Transform" unique_id=1117691755]
+offset_left = 31.0
+offset_top = -67.0
+offset_right = 53.0
+offset_bottom = -49.75
+mouse_force_pass_scroll_events = false
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/normal_font_size = 13
+text = "0"
+scroll_active = false
+vertical_alignment = 2
+
+[node name="HealthTextSport" type="RichTextLabel" parent="Transform" unique_id=1320915941]
+offset_left = -63.749992
+offset_top = -114.999985
+offset_right = -54.249985
+offset_bottom = -87.749985
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 8
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="AbilityTextSport" type="RichTextLabel" parent="Transform" unique_id=1238907492]
+offset_left = -53.75
+offset_top = 8.750008
+offset_right = 54.249985
+offset_bottom = 50.00001
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1507789358]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=584852019]
+position = Vector2(0, 7.152556e-06)
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_0201s")
+
+[node name="EnergyIcons" type="Control" parent="." unique_id=1293415614]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -58.333336
+offset_top = -68.33334
+offset_right = -36.66667
+offset_bottom = 21.666664
+mouse_filter = 2
+
+[node name="Effects" parent="." unique_id=653406654 instance=ExtResource("4_dtw7n")]

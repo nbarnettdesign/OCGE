@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://jciogtga1jmi"]
+
+[ext_resource type="Script" uid="uid://l0hdd2l2nnms" path="res://Scripts/reward_picker.gd" id="1_rp"]
+[ext_resource type="PackedScene" uid="uid://bck22ex12m2ok" path="res://Scenes/binder_card.tscn" id="2_card"]
+[ext_resource type="Texture2D" uid="uid://b6ip2jxdfl0w5" path="res://CardSprites/Cards_BuffTree.png" id="3_x1a3x"]
+[ext_resource type="Texture2D" uid="uid://dgcdcjsx070oa" path="res://CardSprites/Cards_back.png" id="3_xig65"]
+
+[node name="RewardPicker" type="CanvasLayer" unique_id=2029297845]
+process_mode = 3
+layer = 20
+script = ExtResource("1_rp")
+card_scene = ExtResource("2_card")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1662807945]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=1726921015]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=1423380329]
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="Center/Panel" unique_id=1343619106]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel/Margin" unique_id=1170471826]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="Center/Panel/Margin/VBox" unique_id=1294573378]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Choose your reward"
+horizontal_alignment = 1
+
+[node name="OptionsRow" type="HBoxContainer" parent="Center/Panel/Margin/VBox" unique_id=1909027170]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="AddButton" type="Button" parent="Center/Panel/Margin/VBox" unique_id=661855060]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+disabled = true
+text = "Add to collection"
+
+[node name="PreviewBox" type="VBoxContainer" parent="." unique_id=29408017]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -190.0
+offset_right = -40.0
+offset_bottom = 190.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PreviewArt" type="TextureRect" parent="PreviewBox" unique_id=1902836540]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 300)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_x1a3x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PreviewText" type="Label" parent="PreviewBox" unique_id=262796684]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "tdyudrtydtyidfitdftiytiydirtydyrtdryidiry"
+autowrap_mode = 3
+
+[node name="DeckPile2" type="TextureRect" parent="." unique_id=1355307696]
+modulate = Color(0.49354553, 0.49354547, 0.4935457, 1)
+custom_minimum_size = Vector2(150, 210)
+offset_left = 1050.0001
+offset_top = 264.0
+offset_right = 1200.0001
+offset_bottom = 474.0
+rotation = 3.2114058
+mouse_filter = 2
+texture = ExtResource("3_xig65")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeckPile3" type="TextureRect" parent="." unique_id=1631108850]
+modulate = Color(0.74978, 0.74978, 0.7497799, 1)
+custom_minimum_size = Vector2(150, 210)
+offset_left = 1042.0001
+offset_top = 262.0
+offset_right = 1192.0001
+offset_bottom = 472.0
+rotation = 3.0979595
+mouse_filter = 2
+texture = ExtResource("3_xig65")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeckPile4" type="TextureRect" parent="." unique_id=1070323308]
+modulate = Color(0.64193374, 0.6419341, 0.64193374, 1)
+custom_minimum_size = Vector2(150, 210)
+offset_left = 1052.0001
+offset_top = 260.0
+offset_right = 1202.0001
+offset_bottom = 470.0
+rotation = 3.063053
+mouse_filter = 2
+texture = ExtResource("3_xig65")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeckPile5" type="TextureRect" parent="." unique_id=30779928]
+modulate = Color(0.4351923, 0.43519226, 0.43519226, 1)
+custom_minimum_size = Vector2(150, 210)
+offset_left = 1044.0001
+offset_top = 244.0
+offset_right = 1194.0001
+offset_bottom = 454.0
+rotation = 3.185226
+mouse_filter = 2
+texture = ExtResource("3_xig65")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeckPile" type="TextureRect" parent="." unique_id=263133549]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 210)
+offset_left = 1045.0
+offset_top = 257.0
+offset_right = 1195.0
+offset_bottom = 467.0
+rotation = 3.1415927
+mouse_filter = 2
+texture = ExtResource("3_xig65")
+expand_mode = 1
+stretch_mode = 5

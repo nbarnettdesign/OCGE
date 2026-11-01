@@ -1,0 +1,162 @@
+[gd_scene format=3 uid="uid://bpmwkfqv4bf2i"]
+
+[ext_resource type="Script" uid="uid://crehe3nd4wxg2" path="res://Scripts/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://Scenes/save_slot_row.tscn" id="2_row"]
+
+[node name="MainMenu" type="Control" unique_id=333568408]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=987496625]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09, 0.1, 0.14, 1)
+
+[node name="Title" type="Label" parent="." unique_id=1224649132]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 70.0
+offset_bottom = 160.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 64
+text = "Only Card Game Ever"
+horizontal_alignment = 1
+
+[node name="Center" type="CenterContainer" parent="." unique_id=72218257]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainPanel" type="VBoxContainer" parent="Center" unique_id=737707710]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ContinueButton" type="Button" parent="Center/MainPanel" unique_id=1957427460]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Continue"
+
+[node name="SavesButton" type="Button" parent="Center/MainPanel" unique_id=1688077498]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Saves"
+
+[node name="NewGameButton" type="Button" parent="Center/MainPanel" unique_id=1236086252]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "New Game"
+
+[node name="QuitButton" type="Button" parent="Center/MainPanel" unique_id=1068215332]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit"
+
+[node name="SavesPanel" type="VBoxContainer" parent="Center" unique_id=634528943]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SavesTitle" type="Label" parent="Center/SavesPanel" unique_id=1901428587]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Saved games"
+horizontal_alignment = 1
+
+[node name="SlotList" type="VBoxContainer" parent="Center/SavesPanel" unique_id=1275269807]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Slot1" parent="Center/SavesPanel/SlotList" unique_id=1532233979 instance=ExtResource("2_row")]
+layout_mode = 2
+
+[node name="Slot2" parent="Center/SavesPanel/SlotList" unique_id=997699941 instance=ExtResource("2_row")]
+layout_mode = 2
+
+[node name="Slot3" parent="Center/SavesPanel/SlotList" unique_id=723244467 instance=ExtResource("2_row")]
+layout_mode = 2
+
+[node name="SavesBackButton" type="Button" parent="Center/SavesPanel" unique_id=2083465526]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+text = "Back"
+
+[node name="NewGamePanel" type="VBoxContainer" parent="Center" unique_id=18316108]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NewGameTitle" type="Label" parent="Center/NewGamePanel" unique_id=1551431662]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "New game"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="Center/NewGamePanel" unique_id=1404426156]
+layout_mode = 2
+text = "What's your name?"
+
+[node name="NameEdit" type="LineEdit" parent="Center/NewGamePanel" unique_id=215740747]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+placeholder_text = "Your name"
+max_length = 16
+
+[node name="SlotLabel" type="Label" parent="Center/NewGamePanel" unique_id=2054509513]
+layout_mode = 2
+text = "Save slot"
+
+[node name="SlotMenu" type="OptionButton" parent="Center/NewGamePanel" unique_id=97677217]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WarningLabel" type="Label" parent="Center/NewGamePanel" unique_id=1157729458]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+autowrap_mode = 3
+
+[node name="StartButton" type="Button" parent="Center/NewGamePanel" unique_id=852221164]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Start"
+
+[node name="NewBackButton" type="Button" parent="Center/NewGamePanel" unique_id=1151175355]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "Back"
+
+[node name="ConfirmDialog" type="ConfirmationDialog" parent="." unique_id=1849192063]
+unique_name_in_owner = true
+title = "Are you sure?"

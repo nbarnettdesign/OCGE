@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://p28om33e0v4h"]
+
+[ext_resource type="Script" uid="uid://cj2o84c650mla" path="res://Scripts/MonsterCardSlot.gd" id="1_xvvat"]
+[ext_resource type="Texture2D" uid="uid://dm23llkdjd302" path="res://CardSprites/Card_Outline.png" id="2_po3tm"]
+
+[node name="CardSlot" type="Node2D" unique_id=1154617669]
+script = ExtResource("1_xvvat")
+
+[node name="CarSlotImage" type="Sprite2D" parent="." unique_id=1047566814]
+scale = Vector2(0.225, 0.225)
+texture = ExtResource("2_po3tm")

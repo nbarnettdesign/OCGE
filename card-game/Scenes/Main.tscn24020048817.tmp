@@ -1,0 +1,464 @@
+[gd_scene format=3 uid="uid://cluyc22bda4y5"]
+
+[ext_resource type="Texture2D" uid="uid://blop47v2i3y55" path="res://Textures/topdown-view-wooden-table-surface-with-cat-scratch-marks-subtle-ambient-lighting-mobile_1060467-2124.png" id="1_frkhe"]
+[ext_resource type="Script" uid="uid://4h1ectq21npx" path="res://Scripts/CardManager.gd" id="1_kln2b"]
+[ext_resource type="Script" uid="uid://c2onc4k63r7bn" path="res://Scripts/DeckDatabase.gd" id="2_frkhe"]
+[ext_resource type="Script" uid="uid://b64ajk8avqsih" path="res://Scripts/PlayerHand.gd" id="2_rgh2o"]
+[ext_resource type="PackedScene" uid="uid://bhoal1p2e3xs3" path="res://Scenes/CardSlot.tscn" id="3_pbw6q"]
+[ext_resource type="PackedScene" uid="uid://c8djftd5iclyn" path="res://Scenes/Deck.tscn" id="4_pbw6q"]
+[ext_resource type="Script" uid="uid://b1k8i6cxuy4fb" path="res://Scripts/MagicCardSlot.gd" id="4_v1gob"]
+[ext_resource type="Script" uid="uid://dj5cbt6qgnt68" path="res://Scripts/PlayerManaHand.gd" id="5_erwvk"]
+[ext_resource type="PackedScene" uid="uid://3whmf7kl68n0" path="res://Scenes/OpponentCardSlot.tscn" id="5_jw32o"]
+[ext_resource type="PackedScene" uid="uid://p28om33e0v4h" path="res://Scenes/OpponentMagicCardSlot.tscn" id="6_4kpch"]
+[ext_resource type="Script" uid="uid://dve0ly6t0p88a" path="res://Scripts/InputManager.gd" id="6_v1gob"]
+[ext_resource type="Script" uid="uid://sps5qf003sl4" path="res://Scripts/BattleManager.gd" id="8_50glp"]
+[ext_resource type="Script" uid="uid://ctwkfp61p8ux" path="res://Scripts/OpponentDeck.gd" id="8_bmxlf"]
+[ext_resource type="Script" uid="uid://detiu8d3ri3fk" path="res://Scripts/OpponentHand.gd" id="10_4kpch"]
+[ext_resource type="Script" uid="uid://dfrmqo2kdq600" path="res://Scripts/ManaDeck.gd" id="11_2w5on"]
+[ext_resource type="Texture2D" uid="uid://dm23llkdjd302" path="res://CardSprites/Card_Outline.png" id="12_grg3l"]
+[ext_resource type="Script" uid="uid://tdu8owx0bm18" path="res://Scripts/OpponentManaHand.gd" id="13_2w5on"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2w5on"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_346fj"]
+bg_color = Color(1, 1, 1, 0.3647059)
+shadow_color = Color(0, 0, 0, 0.15686275)
+
+[node name="Main" type="Node2D" unique_id=1088991673]
+
+[node name="DeckDatabase" type="Node" parent="." unique_id=820542072]
+script = ExtResource("2_frkhe")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=297368641]
+z_index = -7
+position = Vector2(1041.5055, 595.9875)
+rotation = 1.5707964
+scale = Vector2(3.3813539, 3.3080642)
+texture = ExtResource("1_frkhe")
+
+[node name="CardManager" type="Node2D" parent="." unique_id=95705152]
+script = ExtResource("1_kln2b")
+
+[node name="PlayerHand" type="Node2D" parent="." unique_id=296141373]
+script = ExtResource("2_rgh2o")
+
+[node name="PlayerManaHand" type="Node2D" parent="." unique_id=597727232]
+script = ExtResource("5_erwvk")
+
+[node name="CardSlots" type="Node2D" parent="." unique_id=1053082474]
+
+[node name="CardSlot1" parent="CardSlots" unique_id=1154617669 instance=ExtResource("3_pbw6q")]
+position = Vector2(660.00006, 625.00006)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot2" parent="CardSlots" unique_id=2022042159 instance=ExtResource("3_pbw6q")]
+position = Vector2(660.00006, 767.00006)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot3" parent="CardSlots" unique_id=148029599 instance=ExtResource("3_pbw6q")]
+position = Vector2(760, 625)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot4" parent="CardSlots" unique_id=1812103009 instance=ExtResource("3_pbw6q")]
+position = Vector2(760, 767)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot5" parent="CardSlots" unique_id=1608152686 instance=ExtResource("3_pbw6q")]
+position = Vector2(860, 625)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot6" parent="CardSlots" unique_id=1133593422 instance=ExtResource("3_pbw6q")]
+position = Vector2(860, 767)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot7" parent="CardSlots" unique_id=2105506500 instance=ExtResource("3_pbw6q")]
+position = Vector2(960, 625)
+scale = Vector2(0.8, 0.8)
+script = ExtResource("4_v1gob")
+
+[node name="CardSlot8" parent="CardSlots" unique_id=613787668 instance=ExtResource("3_pbw6q")]
+position = Vector2(960, 767)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot9" parent="CardSlots" unique_id=850457007 instance=ExtResource("3_pbw6q")]
+position = Vector2(1060, 625)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot10" parent="CardSlots" unique_id=137358611 instance=ExtResource("3_pbw6q")]
+position = Vector2(1060, 767)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot11" parent="CardSlots" unique_id=1040725635 instance=ExtResource("3_pbw6q")]
+position = Vector2(1160, 625)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot12" parent="CardSlots" unique_id=1371833027 instance=ExtResource("3_pbw6q")]
+position = Vector2(1160, 767)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot13" parent="CardSlots" unique_id=630320509 instance=ExtResource("3_pbw6q")]
+position = Vector2(1260, 625)
+scale = Vector2(0.8, 0.8)
+
+[node name="CardSlot14" parent="CardSlots" unique_id=616985243 instance=ExtResource("3_pbw6q")]
+position = Vector2(1260, 767)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot1" parent="CardSlots" unique_id=1802314396 instance=ExtResource("5_jw32o")]
+z_index = -1
+position = Vector2(1260, 372)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot2" parent="CardSlots" unique_id=2012650756 instance=ExtResource("5_jw32o")]
+z_index = -1
+position = Vector2(1260, 234)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot3" parent="CardSlots" unique_id=1079238392 instance=ExtResource("5_jw32o")]
+z_index = -1
+position = Vector2(1160, 372)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot4" parent="CardSlots" unique_id=400616414 instance=ExtResource("5_jw32o")]
+z_index = -1
+position = Vector2(1160, 234)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot5" parent="CardSlots" unique_id=1470952703 instance=ExtResource("5_jw32o")]
+z_index = -1
+position = Vector2(1060, 372)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot6" parent="CardSlots" unique_id=493877094 instance=ExtResource("5_jw32o")]
+z_index = -1
+position = Vector2(1060, 234)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot7" parent="CardSlots" unique_id=1835564883 instance=ExtResource("5_jw32o")]
+z_index = -1
+position = Vector2(960, 372)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot8" parent="CardSlots" unique_id=1171294152 instance=ExtResource("6_4kpch")]
+z_index = -1
+position = Vector2(960, 234)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot9" parent="CardSlots" unique_id=2099512021 instance=ExtResource("6_4kpch")]
+z_index = -1
+position = Vector2(860, 372)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot10" parent="CardSlots" unique_id=348026377 instance=ExtResource("6_4kpch")]
+z_index = -1
+position = Vector2(860, 234)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot11" parent="CardSlots" unique_id=1736138394 instance=ExtResource("6_4kpch")]
+z_index = -1
+position = Vector2(760, 372)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot12" parent="CardSlots" unique_id=1895481049 instance=ExtResource("6_4kpch")]
+z_index = -1
+position = Vector2(760, 234)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot13" parent="CardSlots" unique_id=877992005 instance=ExtResource("6_4kpch")]
+z_index = -1
+position = Vector2(660, 372)
+scale = Vector2(0.8, 0.8)
+
+[node name="EnemyCardSlot14" parent="CardSlots" unique_id=1096984800 instance=ExtResource("6_4kpch")]
+z_index = -1
+position = Vector2(660, 234)
+scale = Vector2(0.8, 0.8)
+
+[node name="Deck" parent="." unique_id=1811994010 instance=ExtResource("4_pbw6q")]
+position = Vector2(352, 838)
+scale = Vector2(0.8, 0.8)
+
+[node name="ManaDeck" parent="." unique_id=1793537138 instance=ExtResource("4_pbw6q")]
+position = Vector2(962.99994, 499.00003)
+rotation = 1.5707964
+scale = Vector2(0.8, 0.8)
+script = ExtResource("11_2w5on")
+
+[node name="InputManager" type="Node2D" parent="." unique_id=2145062231]
+script = ExtResource("6_v1gob")
+
+[node name="EndTurnButton" type="Button" parent="." unique_id=1107997511]
+offset_left = 318.0
+offset_top = 576.0
+offset_right = 396.0
+offset_bottom = 607.0
+text = "End Turn"
+
+[node name="OpponentHand" type="Node2D" parent="." unique_id=1450533850]
+script = ExtResource("10_4kpch")
+
+[node name="OpponentManaHand" type="Node2D" parent="." unique_id=1742422663]
+script = ExtResource("13_2w5on")
+
+[node name="OpponentDeck" type="Node2D" parent="." unique_id=2121959359]
+position = Vector2(1555, 117)
+script = ExtResource("8_bmxlf")
+
+[node name="Deck" parent="OpponentDeck" unique_id=649012564 instance=ExtResource("4_pbw6q")]
+position = Vector2(-1.000001, 1.1920929e-07)
+rotation = 3.1415927
+scale = Vector2(0.8, 0.8)
+script = null
+
+[node name="CollisionShape2D" parent="OpponentDeck/Deck/Area2D" parent_id_path=PackedInt32Array(649012564, 1181846784) index="0" unique_id=1679107122]
+disabled = true
+
+[node name="CardCountText" parent="OpponentDeck/Deck" index="2" unique_id=94965244]
+offset_left = 56.249817
+offset_top = 78.75006
+offset_right = 94.24982
+offset_bottom = 117.75006
+rotation = 3.1415927
+horizontal_alignment = 0
+vertical_alignment = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="BattleManager" type="Node" parent="." unique_id=683708051]
+script = ExtResource("8_50glp")
+
+[node name="BattleTimer" type="Timer" parent="." unique_id=2004391557]
+
+[node name="PlayerDiscard" type="Node2D" parent="." unique_id=483709571]
+position = Vector2(1466.9999, 692.99994)
+scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerDiscard" unique_id=483113071]
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("12_grg3l")
+
+[node name="OpponentDiscard" type="Node2D" parent="." unique_id=1986878201]
+position = Vector2(411.00012, 302.00003)
+scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="OpponentDiscard" unique_id=1292558409]
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("12_grg3l")
+
+[node name="PlayerHealthText" type="RichTextLabel" parent="." unique_id=503298871]
+offset_left = 285.0
+offset_top = 909.0
+offset_right = 413.0
+offset_bottom = 1034.0
+theme_override_font_sizes/normal_font_size = 100
+text = "5"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerActiveManaText" type="RichTextLabel" parent="." unique_id=1829192762]
+offset_left = 508.0
+offset_top = 556.0
+offset_right = 636.0
+offset_bottom = 681.0
+theme_override_font_sizes/normal_font_size = 60
+text = "5"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerActiveManaCardsText" type="RichTextLabel" parent="." unique_id=1448785837]
+offset_left = 508.0
+offset_top = 609.0
+offset_right = 636.0
+offset_bottom = 734.0
+theme_override_font_sizes/normal_font_size = 60
+text = "5"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OpponentActiveManaText" type="RichTextLabel" parent="." unique_id=77950807]
+offset_left = 1302.0
+offset_top = 280.0
+offset_right = 1430.0
+offset_bottom = 405.0
+theme_override_font_sizes/normal_font_size = 60
+text = "5"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OpponentActiveManaCardsText" type="RichTextLabel" parent="." unique_id=1227530779]
+offset_left = 1301.0
+offset_top = 333.0
+offset_right = 1429.0
+offset_bottom = 458.0
+theme_override_font_sizes/normal_font_size = 60
+text = "5"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Active Mana" type="RichTextLabel" parent="." unique_id=1328735204]
+offset_left = 193.0
+offset_top = 608.0
+offset_right = 548.0
+offset_bottom = 692.0
+theme_override_font_sizes/normal_font_size = 30
+text = "Active Mana:
+Mana Cards Selected:"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Active Mana2" type="RichTextLabel" parent="." unique_id=1159373021]
+offset_left = 1400.0
+offset_top = 311.0
+offset_right = 1793.0
+offset_bottom = 436.0
+theme_override_font_sizes/normal_font_size = 30
+text = ": Active Mana
+: Mana Cards Selected "
+scroll_active = false
+vertical_alignment = 1
+
+[node name="OpponentHealthText" type="RichTextLabel" parent="." unique_id=935156268]
+offset_left = 1748.0
+offset_top = 59.0
+offset_right = 1876.0
+offset_bottom = 184.0
+theme_override_font_sizes/normal_font_size = 100
+text = "5"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttackMenu" type="CanvasLayer" parent="." unique_id=992272755]
+
+[node name="Buttons" type="Control" parent="AttackMenu" unique_id=2072265319]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 29.0
+offset_bottom = 20.0
+
+[node name="Attack1" type="Button" parent="AttackMenu/Buttons" unique_id=1664036421]
+layout_mode = 0
+offset_left = 40.0
+offset_top = -21.0
+offset_right = 142.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2w5on")
+theme_override_styles/hover = SubResource("StyleBoxFlat_346fj")
+
+[node name="Attack2" type="Button" parent="AttackMenu/Buttons" unique_id=641780132]
+layout_mode = 0
+offset_left = 40.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 26.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_2w5on")
+theme_override_styles/hover = SubResource("StyleBoxFlat_346fj")
+
+[node name="PlayerHearts" type="HBoxContainer" parent="." unique_id=461259841]
+offset_left = 280.0
+offset_top = 718.0
+offset_right = 320.0
+offset_bottom = 758.0
+
+[node name="OpponentHearts" type="HBoxContainer" parent="." unique_id=130678461]
+offset_left = 1527.0
+offset_top = 198.0
+offset_right = 1567.0
+offset_bottom = 238.0
+
+[node name="GameOver" type="CanvasLayer" parent="." unique_id=26599894]
+process_mode = 3
+visible = false
+
+[node name="Dim" type="ColorRect" parent="GameOver" unique_id=2027144550]
+offset_right = 2046.0
+offset_bottom = 1179.0
+color = Color(1, 1, 1, 0.40392157)
+
+[node name="Message" type="Label" parent="GameOver" unique_id=1904564253]
+custom_maximum_size = Vector2(900, 900)
+offset_left = 524.0
+offset_top = 77.0
+offset_right = 1386.0
+offset_bottom = 274.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 0)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 80
+text = "You Won, well done"
+horizontal_alignment = 1
+
+[node name="PlayAgain" type="Button" parent="GameOver" unique_id=337257102]
+offset_left = 775.0
+offset_top = 569.0
+offset_right = 1154.0
+offset_bottom = 699.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Try Again"
+
+[node name="ToBinder" type="Button" parent="GameOver" unique_id=275298425]
+offset_left = 150.0
+offset_top = 90.0
+offset_right = 451.0
+offset_bottom = 181.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Binder"
+
+[node name="CurrentDeckLabel" type="Label" parent="GameOver" unique_id=338234965]
+offset_left = 138.0
+offset_top = 327.0
+offset_right = 546.0
+offset_bottom = 426.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 0)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 60
+text = "Current Deck"
+
+[node name="CurrentDeckLabel2" type="Label" parent="GameOver" unique_id=1661722604]
+offset_left = 138.0
+offset_top = 327.0
+offset_right = 546.0
+offset_bottom = 426.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 0)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 60
+text = "_______________"
+
+[node name="SelectedDeck" type="OptionButton" parent="GameOver" unique_id=1017733830]
+offset_left = 124.0
+offset_top = 417.0
+offset_right = 572.0
+offset_bottom = 503.0
+theme_override_font_sizes/font_size = 49
+selected = 0
+item_count = 1
+popup/item_0/text = "Default Deck"
+popup/item_0/id = 0
+
+[node name="GiveUp" type="Button" parent="GameOver" unique_id=975668528]
+offset_left = 830.0
+offset_top = 718.0
+offset_right = 1095.0
+offset_bottom = 795.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Give Up"
+
+[connection signal="pressed" from="EndTurnButton" to="BattleManager" method="_on_end_turn_button_pressed"]
+
+[editable path="OpponentDeck/Deck"]

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://c8djftd5iclyn"]
+
+[ext_resource type="Script" uid="uid://2q7qxv72ph8y" path="res://Scripts/Deck.gd" id="1_0g7pp"]
+[ext_resource type="Texture2D" uid="uid://dgcdcjsx070oa" path="res://CardSprites/Cards_back.png" id="2_y1pkx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0201s"]
+size = Vector2(112, 158)
+
+[node name="Deck" type="Node2D" unique_id=1811994010]
+script = ExtResource("1_0g7pp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=636926970]
+z_index = -2
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("2_y1pkx")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1181846784]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1679107122]
+shape = SubResource("RectangleShape2D_0201s")
+
+[node name="CardCountText" type="RichTextLabel" parent="." unique_id=94965244]
+z_index = -2
+offset_left = 18.0
+offset_top = 39.0
+offset_right = 56.0
+offset_bottom = 78.0
+text = "0"
+fit_content = true
+horizontal_alignment = 2
+vertical_alignment = 2

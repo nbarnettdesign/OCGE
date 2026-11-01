@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://buthov533bju7"]
+
+[ext_resource type="Script" uid="uid://cbrvj4tip1lie" path="res://Scripts/card_effects.gd" id="1_nhsg7"]
+
+[node name="Effects" type="Node2D" unique_id=653406654]
+script = ExtResource("1_nhsg7")
+
+[node name="Fx" type="Node2D" parent="." unique_id=1862433371]
+
+[node name="EffectList" type="PanelContainer" parent="." unique_id=883415937]
+unique_name_in_owner = true
+offset_left = 77.0
+offset_top = -94.0
+offset_right = 257.0
+offset_bottom = -54.0
+mouse_filter = 2
+
+[node name="EffectLabel" type="Label" parent="EffectList" unique_id=535072579]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+autowrap_mode = 3
