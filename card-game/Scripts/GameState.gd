@@ -13,11 +13,13 @@ const DeckDB = preload("res://Scripts/DeckDatabase.gd")
 const CardDB = preload("res://Scripts/CardDatabase.gd")
 const SETTINGS_PATH = "user://settings.cfg"
 const rewardCardAmount = 3
-var settings = {"volume": 1.0, "fullscreen": false}
+var settings = {"volume": 1.0, "music_volume": 0.8, "sfx_volume": 1.0, "fullscreen": false}
 var collection = {}        # card name -> copies owned
 var decks = {}             # deck name -> Array of card names
 var selected_deck = ""     # the deck used in battle
 var defeated = {}          # npc id -> true
+var new_cards = []            # cards you've won but haven't looked at yet (they show a NEW badge)
+var win_counts = {}           # npc id -> times beaten
 var sleeves = ["default"]            # sleeves the player owns
 var equipped_sleeve = "default"
 var opponent_sleeve = "default"  
@@ -63,6 +65,8 @@ func load_settings():
 	var cfg = ConfigFile.new()
 	if cfg.load(SETTINGS_PATH) == OK:
 		settings["volume"] = cfg.get_value("audio", "volume", 1.0)
+		settings["music_volume"] = cfg.get_value("audio", "music_volume", 0.8)
+		settings["sfx_volume"] = cfg.get_value("audio", "sfx_volume", 1.0)
 		settings["fullscreen"] = cfg.get_value("display", "fullscreen", false)
 	apply_settings()
 
@@ -70,15 +74,26 @@ func load_settings():
 func save_settings():
 	var cfg = ConfigFile.new()
 	cfg.set_value("audio", "volume", settings["volume"])
+	cfg.set_value("audio", "music_volume", settings["music_volume"])
+	cfg.set_value("audio", "sfx_volume", settings["sfx_volume"])
 	cfg.set_value("display", "fullscreen", settings["fullscreen"])
 	cfg.save(SETTINGS_PATH)
 
 
 func apply_settings():
-	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(settings["volume"], 0.0001)))
-	AudioServer.set_bus_mute(0, settings["volume"] <= 0.0)
+	_set_bus("Master", settings["volume"])
+	_set_bus("Music", settings["music_volume"])
+	_set_bus("SFX", settings["sfx_volume"])
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if settings["fullscreen"]
 		else DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+func _set_bus(bus_name, linear):
+	var index = AudioServer.get_bus_index(bus_name)
+	if index < 0:
+		return
+	AudioServer.set_bus_volume_db(index, linear_to_db(maxf(linear, 0.0001)))
+	AudioServer.set_bus_mute(index, linear <= 0.0)
 
 # ---------- save slots ----------
 
@@ -131,6 +146,8 @@ func _write_meta(slot):
 
 # a fresh game's data, in memory only
 func _new_state():
+	new_cards = []
+	win_counts = {}
 	var db = DeckDB.new()
 	collection.clear()
 	for c in db.defaultDeck:
@@ -190,6 +207,8 @@ func load_slot(slot):
 		decks[k] = data["decks"][k].duplicate()
 	selected_deck = data.get("selected_deck", "")
 	defeated = data.get("defeated", {})
+	new_cards = data.get("new_cards", [])
+	win_counts = data.get("win_counts", {})
 	npc_deck_choice = data.get("npc_deck_choice", {})
 	sleeves = data.get("sleeves", ["default"])
 	if not sleeves.has("default"):
@@ -225,6 +244,8 @@ func save_game():
 		"npc_deck_choice": npc_deck_choice,
 		"sleeves": sleeves,
 		"equipped_sleeve": equipped_sleeve,
+		"new_cards": new_cards,
+		"win_counts": win_counts,
 	}
 	var f = FileAccess.open(slot_path(current_slot), FileAccess.WRITE)
 	if f:
@@ -263,12 +284,12 @@ func start_game():
 		if has_world_position:       # Continue: put the player back where they were
 			overworld_position = world_position
 			_restore_player = true
-	get_tree().change_scene_to_file(scene)
+	Transition.change_scene(scene)
 
 
 func go_to_menu():
 	get_tree().paused = false
-	get_tree().change_scene_to_file(MENU_SCENE)
+	Transition.change_scene(MENU_SCENE)
 
 # ---------- decks ----------
 
@@ -363,7 +384,7 @@ func return_to_overworld():
 		go_to_binder()
 		return
 	get_tree().paused = false
-	get_tree().change_scene_to_file(overworld_scene)
+	Transition.change_scene(overworld_scene)
 
 
 # puts the player back where they were when the overworld loads again
@@ -392,21 +413,21 @@ func start_battle(npc_id):
 	var npc = NPCDatabase.NPCS.get(npc_id, {})
 	rules = BoardRules.build(npc.get("rules", []))
 	get_tree().paused = false
-	get_tree().change_scene_to_file(BATTLE_SCENE)
+	Transition.change_scene(BATTLE_SCENE)
 	
 
 
 func go_to_binder(origin = ""):
 	binder_origin = origin
 	get_tree().paused = false
-	get_tree().change_scene_to_file(BINDER_SCENE)
+	Transition.change_scene(BINDER_SCENE)
 
 
 # leaves the binder, back to wherever it was opened from
 func close_binder():
 	get_tree().paused = false
 	if binder_origin == "battle" or binder_origin == "gameover":
-		get_tree().change_scene_to_file(BATTLE_SCENE)
+		Transition.change_scene(BATTLE_SCENE)
 	else:
 		return_to_overworld()
 
@@ -464,6 +485,8 @@ func reward_options():
 	return options
 
 func claim_reward(card_name):
+	if collection.get(card_name, 0) == 0 and not new_cards.has(card_name):
+		new_cards.append(card_name)               # first copy: shows a NEW badge in the Binder
 	collection[card_name] = collection.get(card_name, 0) + 1
 	mark_defeated()
 
@@ -507,6 +530,7 @@ func unlock_npc_sleeve():
 func mark_defeated():
 	if current_npc != "":
 		defeated[current_npc] = true
+		win_counts[current_npc] = win_counts.get(current_npc, 0) + 1
 	save_game()
 
 func _capture_world_position():
@@ -535,3 +559,32 @@ func _weighted_pick(pool):
 		if roll <= 0:
 			return entry["card"]
 	return pool[-1]["card"]
+	
+# every card that can be collected: not energy cards, tokens, the Mana Monster, or anything marked "hidden"
+func collectible_cards():
+	var db = preload("res://Scripts/CardDatabase.gd")
+	var list = []
+	for card in db.CARDS.keys():
+		var data = db.get_card(card)
+		if data.get("type", "") != "Mana" and not data.get("token", false) \
+				and not data.get("hidden", false) and card != "ManaMonster":
+			list.append(card)
+	return list
+
+
+func collected_count():
+	var owned = 0
+	for card in collectible_cards():
+		if collection.get(card, 0) > 0:
+			owned += 1
+	return owned
+
+func first_turn_is_fixed():
+	return NPCDatabase.NPCS.get(current_npc, {}).get("first_turn", "random") in ["player", "opponent"]
+
+
+func first_turn_for_battle():
+	var setting = NPCDatabase.NPCS.get(current_npc, {}).get("first_turn", "random")
+	if setting == "player" or setting == "opponent":
+		return setting
+	return "player" if randf() < 0.5 else "opponent"

@@ -15,7 +15,7 @@ extends RefCounted
 # ===== EASY, NORMAL, HARD
 #  rewards     count: cards dropped per win; pool: {card, weight}; first_win_card: guaranteed on the
 #              first win; repeatable: false = only rewards the first win
-
+# add "first_turn": "opponent",     # "player", "opponent", or leave out for a coin toss
 
 const NPCS = {
 	"clown_kid": {
@@ -23,6 +23,15 @@ const NPCS = {
 		"dialogue": ["Ten clowns and a dream.", "player: I count four.", "...Four clowns and a dream."],
 		"win_dialogue": ["Okay, okay. Take a trick. I've got more."],
 		"deck": "deckClown", "rules": ["standard"], "difficulty": "EASY",
+		"faction": "circus",
+		"sleeve_reward": "party",
+		"rewards": {"repeatable": true, "cards": ["Clown", "SpaceMonkey", "Pebble", "FireAlligator", "JustinMcelroy"]},
+	},
+	"Tester": {
+		"name": "Tester", "intro": "Cheap tricks and a big red nose.",
+		"dialogue": ["Ten clowns and a dream.", "player: I count four.", "...Four clowns and a dream."],
+		"win_dialogue": ["Okay, okay. Take a trick. I've got more."],
+		"deck": "testDeck", "rules": ["standard"], "difficulty": "EASY",
 		"faction": "circus",
 		"sleeve_reward": "party",
 		"rewards": {"repeatable": true, "cards": ["Clown", "SpaceMonkey", "Pebble", "FireAlligator", "JustinMcelroy"]},

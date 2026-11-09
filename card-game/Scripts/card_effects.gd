@@ -22,7 +22,7 @@ const EFFECTS = {
 	"returns_to_hand": {"name": "Returns to hand", "text": "goes back to the hand when destroyed", "color": Color(0.4, 1.0, 0.6), "rise": true},
 	"swapped": {"name": "Swapped", "text": "attack and health are swapped", "color": Color(1.0, 0.5, 0.9), "rise": false},
 	"_just_played": {"name": "Just played", "text": "can't attack yet", "particles": false},
-	"taunt": {"name": "Taunt", "text": "must be attacked first", "particles": false},
+	"taunt": {"name": "Taunt", "text": "must be attacked if on the field", "particles": false},
 	"reach": {"name": "Reach", "text": "can attack the back row", "particles": false},
 	"poisoned": {"name": "Poisoned", "text": "loses 1/8 of its health each turn", "color": Color(0.5, 0.9, 0.2), "rise": true},
 	"invisible": {"name": "Invisible", "text": "can't be targeted by attacks", "color": Color(0.8, 0.9, 1.0), "rise": true},
@@ -128,5 +128,8 @@ func _update_list():
 	for key in active:
 		var info = _info(key)
 		lines.append("%s: %s" % [info["name"], info["text"]] if info["text"] != "" else info["name"])
-	list_label.text = "\n".join(lines)
-	list_panel.visible = hovered and not lines.is_empty()
+	list_panel.visible = false                 # the old panel scaled with the card, which blurred the text
+	if hovered and not lines.is_empty():
+		Juice.show_tip(card, "\n".join(lines))
+	elif Juice.tip_owner == card:
+		Juice.hide_tip()

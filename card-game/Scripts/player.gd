@@ -60,15 +60,17 @@ func movement_loop():
 func update_animation() -> void:
 	match state:
 		State.IDLE:
-			animation_tree.active = false
+			animation_playback.travel("player_idle")
 			pass
 		State.RIGHT:
-			animation_playback.travel("player_right")
+			$Sprite2D.flip_h = true
+			animation_playback.travel("player_left")
 		State.LEFT:
+			$Sprite2D.flip_h =false
 			animation_playback.travel("player_left")
 		State.UP:
-			animation_playback.travel("player_up")
+			animation_playback.travel("player_left")
 		State.DOWN:
-			animation_playback.travel("player_forward")
+			animation_playback.travel("player_left")
 			
 			

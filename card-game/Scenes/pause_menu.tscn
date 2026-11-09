@@ -89,6 +89,22 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Back"
 
+[node name="MusicLabel" type="Label" parent="Center/Panel/SettingsPage" unique_id=199088493]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="Center/Panel/SettingsPage" unique_id=1324054331]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SFXlabel" type="Label" parent="Center/Panel/SettingsPage" unique_id=201051907]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SfxSlider" type="HSlider" parent="Center/Panel/SettingsPage" unique_id=788468716]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="ConfirmDialog" type="ConfirmationDialog" parent="." unique_id=1369992093]
 unique_name_in_owner = true
 oversampling_override = 1.0

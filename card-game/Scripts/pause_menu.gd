@@ -8,6 +8,8 @@ extends CanvasLayer
 @onready var volume_slider = %VolumeSlider
 @onready var fullscreen_check = %FullscreenCheck
 @onready var confirm_dialog = %ConfirmDialog
+@onready var music_slider = %MusicSlider
+@onready var sfx_slider = %SfxSlider
 
 var confirm_action = ""
 
@@ -22,11 +24,19 @@ func _ready():
 	%QuitMenuButton.pressed.connect(_ask.bind("menu"))
 	%QuitDesktopButton.pressed.connect(_ask.bind("desktop"))
 	confirm_dialog.confirmed.connect(_on_confirmed)
+	music_slider.value = GameState.settings["music_volume"] * 100.0
+	sfx_slider.value = GameState.settings["sfx_volume"] * 100.0
+	music_slider.value_changed.connect(_on_slider.bind("music_volume"))
+	sfx_slider.value_changed.connect(_on_slider.bind("sfx_volume"))
 	volume_slider.value = GameState.settings["volume"] * 100.0
 	fullscreen_check.button_pressed = GameState.settings["fullscreen"]
 	volume_slider.value_changed.connect(_on_volume)
 	fullscreen_check.toggled.connect(_on_fullscreen)
 
+func _on_slider(value, key):
+	GameState.settings[key] = value / 100.0
+	GameState.apply_settings()
+	GameState.save_settings()
 
 func _unhandled_input(event):
 	if not event.is_action_pressed("ui_cancel"):

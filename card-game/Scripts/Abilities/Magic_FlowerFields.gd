@@ -40,3 +40,6 @@ func on_status_applied(status):
 	if status == "burned":
 		card.health = 0
 		battle().update_health_label(card)
+
+func predict_damage(amount):
+	return mini(amount, card.health - 1) if card.health > 1 else amount

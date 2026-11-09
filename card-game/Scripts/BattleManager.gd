@@ -15,7 +15,7 @@ var ai_monsters_played = 0
 enum AIDifficulty { CUSTOM, EASY, NORMAL, HARD }
 @export var ai_difficulty: AIDifficulty = AIDifficulty.CUSTOM
 @export var give_up_button: Button
-
+var firstturn = true
 
 const CARD_SMALL_CARD_SCALE = 0.8
 const CARD_MOVE_SPEED = 0.2
@@ -50,9 +50,12 @@ var is_opponents_turn = false
 var player_is_attacking = false
 var game_over = false
 var rounds_played = 0
+var hearts_animate = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Audio.play_music("battle")
+	firstturn = true
 	if not InputMap.has_action("end_turn"):
 		InputMap.add_action("end_turn")
 		var key = InputEventKey.new()
@@ -79,6 +82,9 @@ func _ready() -> void:
 	if stalemate_button:
 		stalemate_button.visible = false
 		stalemate_button.pressed.connect(_on_call_stalemate)
+	hearts_animate = true
+	if GameState.pending_game_over.is_empty():          # not when returning to a game over screen
+		_start_with_coin_flip()
 
 func _process(_delta):
 	# keeps monster damage labels current (Jump Man gaining mana, Pencil swaps, ...)
@@ -87,7 +93,8 @@ func _process(_delta):
 			update_attack_label(card)
 
 func _on_end_turn_button_pressed() -> void:
-	print("END TURN PRESSED") #@@@
+	if firstturn == true:
+		firstturn = false
 	run_turn_end(player_cards_on_battlefield)
 	is_opponents_turn = true
 	_update_stalemate_button()
@@ -98,7 +105,28 @@ func _on_end_turn_button_pressed() -> void:
 	opponent_turn()
 
 func _on_give_up():
-	game_over = true                  # stops the opponent's turn and any pending win/lose popup
+	if game_over:
+		return
+	var dialog = ConfirmationDialog.new()
+	dialog.title = "Give up?"
+	dialog.dialog_text = "Give up this battle?\nIt counts as a loss, with no rewards."
+	dialog.ok_button_text = "Give Up"
+	dialog.cancel_button_text = "Keep Playing"
+	dialog.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(dialog)
+	get_tree().paused = true
+	dialog.confirmed.connect(_give_up_confirmed)
+	dialog.canceled.connect(_give_up_cancelled.bind(dialog))
+	dialog.popup_centered()
+
+
+func _give_up_cancelled(dialog):
+	get_tree().paused = false
+	dialog.queue_free()
+
+
+func _give_up_confirmed():
+	game_over = true
 	GameState.pending_game_over = {}
 	GameState.return_to_overworld()
 
@@ -115,6 +143,19 @@ func _update_stalemate_button():
 func has_keyword(card, key):
 	return card.statuses.has(key) or key in card.get_meta("keywords", [])
 
+func _start_with_coin_flip():
+	var who = GameState.first_turn_for_battle()
+	var player_first = who == "player"
+	var opponent_name = NPCDatabase.NPCS.get(GameState.current_npc, {}).get("name", "Opponent")
+	await get_tree().create_timer(0.7).timeout           # let the hands finish dealing
+	if GameState.first_turn_is_fixed():
+		Juice.banner("You go first!" if player_first else "%s goes first!" % opponent_name)
+	else:
+		get_tree().paused = true
+		await Juice.coin_flip(player_first, opponent_name)
+		get_tree().paused = false
+	if not player_first:
+		_on_end_turn_button_pressed() 
 
 func cleanse(cards):
 	for card in cards:
@@ -163,6 +204,8 @@ func _fill_hearts(holder, count):
 	count = maxi(count, 0)                 # a big hit can't take you below zero
 	while holder.get_child_count() > count:
 		var extra = holder.get_child(holder.get_child_count() - 1)
+		if hearts_animate:
+			Juice.heart_pop(extra)
 		holder.remove_child(extra)
 		extra.queue_free()
 	while holder.get_child_count() < count:
@@ -359,6 +402,7 @@ func cards_with_tag(tag, side = "both"):
 
 func opponent_turn():
 	# start of the opponent's turn
+	Juice.banner("Opponent's Turn", Color(0.9, 0.45, 0.4))
 	ai_monsters_played = 0
 	for mana_card in $"../OpponentManaHand".opponent_mana_hand:
 		mana_card.mana_selected = false
@@ -376,9 +420,10 @@ func opponent_turn():
 	if $"../ManaDeck".mana_deck.size() != 0:
 		$"../ManaDeck".draw_card()
 		await wait(1.0)
-	if $"../OpponentDeck".opponent_deck.size() != 0:
-		$"../OpponentDeck".draw_card()
-		await wait(1.0)
+	if firstturn == false:
+		if $"../OpponentDeck".opponent_deck.size() != 0:
+			$"../OpponentDeck".draw_card()
+			await wait(1.0)
 	check_game_over()
 
 	# play a card if there's a free slot
@@ -418,9 +463,11 @@ func direct_attack(attacking_card, attacker):
 	elif attacker == "Opponent":
 		player_health -= GameState.rules["direct_hit_damage"]
 		note_damage()
+		Juice.shake(14.0, 0.3)
 	else:
 		opponent_health -= GameState.rules["direct_hit_damage"]
 		note_damage()
+		Juice.shake(14.0, 0.3)
 	update_hearts_display()
 	check_game_over()
 		
@@ -460,8 +507,8 @@ func attack(attacking_card, defending_card, attacker, force_hit = false):
 	#If defender is magic, it hits back, else it doenst
 	var move = attacking_card.attacks[attacking_card.selected_attack]
 	var damage = move_damage(attacking_card, move)
-	if move.get("crush", false):               # Crush: at least half of the target's current health
-		damage = maxi(damage, ceili(defending_card.health / 2.0))
+	if move.get("crush", false):               # Crush: always half of the target's current health, rounded up
+		damage = ceili(defending_card.health / 2.0)
 	var trample_excess = 0
 	var trample_card = null
 	var friendly_target = (defending_card in player_cards_on_battlefield) == (attacker == "Player") and not force_hit
@@ -589,6 +636,28 @@ func destroy_card(card, card_owner):
 		remove_planted_from_field(card)     # gone for good: no discard
 		card.queue_free()
 		return
+	if card.get_meta("token", false):
+		release_ties(card)
+		var slot = card.card_slot_card_is_in
+		if card_owner == "Player":
+			player_cards_on_battlefield.erase(card)
+			if slot:
+				slot.get_node("Area2D/CollisionShape2D").disabled = false
+		else:
+			opponent_cards_on_battlefield.erase(card)
+			if slot and slot.card_slot_type == "Monster" and slot not in empty_monster_card_slots:
+				empty_monster_card_slots.append(slot)
+		trigger_hook(card, "on_destroyed")        # the Piñata pays out here
+		if slot:
+			slot.card_in_slot = false
+		card.card_slot_card_is_in = null
+		card.defeated = true
+		card.get_node("Area2D/CollisionShape2D").set_deferred("disabled", true)
+		var fade = get_tree().create_tween()
+		fade.tween_property(card, "modulate:a", 0.0, 0.25)
+		fade.tween_callback(card.queue_free)
+		check_game_over()
+		return
 	if card.statuses.has("returns_to_hand"):
 		return_card_to_hand(card)
 		trigger_hook(card, "on_returned_to_hand")
@@ -678,8 +747,32 @@ func apply_damage(target, amount, source_type):
 	update_health_label(target)
 	if amount > 0:
 		note_damage()
+		Juice.hit(target, amount)
+		Audio.play("hit")
 		trigger_hook(target, "on_damaged", [amount, source_type])
 	return amount
+
+# what a hit of this size would really do to this target (no side effects)
+func predict_amount(amount, target, source_type = "attack"):
+	if target.ability_script and target.ability_script.has_method("predict_damage"):
+		amount = target.ability_script.predict_damage(amount)    # some cards cap what one hit can do
+	if target.statuses.has("immune_to_attacks") and source_type == "attack":
+		return 0
+	if target.statuses.has("only_hurt_by_attacks") and source_type != "attack":
+		return 0
+	if target.statuses.has("burned"):
+		amount *= 2
+	if target.statuses.has("ignores_damage"):
+		return 0
+	return amount
+
+
+func predict_damage(attacker, move, target):
+	var amount = move_damage(attacker, move)
+	if move.get("crush", false):
+		amount = ceili(target.health / 2.0)
+	return predict_amount(amount, target, "attack")
+
 
 func can_use_attack(card, attack_data):
 	return card.attached_mana >= attack_data["cost"]
@@ -790,8 +883,10 @@ func run_turn_end(cards):
 		card.set_meta("used_this_turn", false)
 
 func heal(card, amount):
+	var before = card.health
 	card.health = min(card.max_health, card.health + amount)
-	update_health_label(card)
+	if card.health > before:
+		Juice.float_at(card, "+" + str(card.health - before), Juice.GREEN)
 
 func transform_card(card, new_name):
 	if not is_instance_valid(card):
@@ -895,9 +990,13 @@ func end_opponent_turn():
 	run_turn_end(opponent_cards_on_battlefield)
 	clear_status(opponent_cards_on_battlefield, "cant_attack")
 	is_opponents_turn = false
+	Juice.banner("Your Turn")
 	$"../CardManager".cancel_drag()
-	$"../Deck".reset_draw()
-	$"../Deck".draw_card()
+	if firstturn == false:
+		$"../Deck".reset_draw()
+		$"../Deck".draw_card()
+	else:
+		firstturn = false
 	$"../ManaDeck".reset_draw()
 	$"../ManaDeck".draw_card()
 	$"../CardManager".reset_played_cards()
@@ -913,8 +1012,11 @@ func end_opponent_turn():
 	_update_stalemate_button()
 	check_game_over()
 	
+	
 
 func move_damage(card, move):
+	if move.get("crush", false):
+		return maxi(card.attack, 1)            # the real damage depends on the target
 	var d = move["damage"]
 	if d is String:
 		if d == "per_mana":
@@ -1015,6 +1117,7 @@ func shuffle_card_into_deck(card):
 	card.queue_free()
 
 func update_attack_label(card):
+	
 	if card.card_type != "Monster":
 		card.get_node("Transform/AttackText" + card.card_type).text = str(card.attack)
 		return
@@ -1023,7 +1126,9 @@ func update_attack_label(card):
 		var text = ""
 		if i < card.attacks.size() and not card.attacks[i].get("passive", false):
 			var move = card.attacks[i]
-			if move["damage"] is String and move["damage"] == "per_mana":
+			if move.get("crush", false):
+				text = ""                              # no fixed amount to show
+			elif move["damage"] is String and move["damage"] == "per_mana":
 				text = str(card.attack) + "x" if card.attack > 0 else ""
 			else:
 				var d = move_damage(card, move)

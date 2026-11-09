@@ -20,6 +20,11 @@ config/icon="uid://ca5bqecsjqfa"
 
 GameState="*uid://cyxvcityi04i"
 DebugConsole="*uid://b4knt5o58pdp7"
+Transition="*uid://b3dxfcsrr4djq"
+Audio="*uid://bsbk3s12su1qr"
+UiJuice="*uid://c4jc4r4yoh77y"
+Juice="*uid://b60sv5w3eqmrp"
+Targeting="*uid://cvbsgqhdfihkq"
 
 [display]
 
@@ -29,6 +34,10 @@ window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
+
+[gui]
+
+theme/custom="res://Themes/game_theme.tres"
 
 [input]
 

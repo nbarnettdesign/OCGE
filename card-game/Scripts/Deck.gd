@@ -37,36 +37,30 @@ func draw_card():
 			$Sprite2D.modulate.a = 0.2
 			$CardCountText.text = ""
 		var card_scene = preload(CARD_SCENE_PATH)
-		var card_image_path
 		var new_card = card_scene.instantiate()
 		assign_card_info_to_card(new_card, card_drawn_name)
-		if ResourceLoader.exists("res://CardSprites/Cards_" + card_drawn_name + ".png"):
-			if new_card.card_type == "Monster":
-				hide_text(new_card, "Magic")
-				hide_text(new_card, "Sport")
-				show_text(new_card, "Monster", card_drawn_name)
+		if new_card.card_type == "Monster":
+			hide_text(new_card, "Magic")
+			hide_text(new_card, "Sport")
+			show_text(new_card, "Monster", card_drawn_name)
+			
+		elif new_card.card_type == "Magic":
+			hide_text(new_card, "Monster")
+			hide_text(new_card, "Sport")
+			show_text(new_card, "Magic", card_drawn_name)
+			
+		elif new_card.card_type == "Sport":
+			hide_text(new_card, "Magic")
+			hide_text(new_card, "Monster")
+			show_text(new_card, "Sport", card_drawn_name)
 				
-			elif new_card.card_type == "Magic":
-				hide_text(new_card, "Monster")
-				hide_text(new_card, "Sport")
-				show_text(new_card, "Magic", card_drawn_name)
-				
-			elif new_card.card_type == "Sport":
-				hide_text(new_card, "Magic")
-				hide_text(new_card, "Monster")
-				show_text(new_card, "Sport", card_drawn_name)
-				
-		else:
-			card_image_path = str("res://CardSprites/Cards_back.png")
-			new_card.get_node("Attack").text = "!"
-			new_card.get_node("Health").text = "!"
-			new_card.get_node("CardImage").texture = load(card_image_path)
 		$"../CardManager".add_child(new_card)
 		new_card.position = position
 		new_card.name = "Card"
 		CardFactory.apply_sleeve(new_card, GameState.equipped_sleeve)
 		$"../PlayerHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
 		new_card.get_node("AnimationPlayer").play("card_flip")
+		Audio.play("draw")
 
 func hide_text(new_card, newcardtype):
 	for n in CardFactory.attack_nodes(new_card, newcardtype):
@@ -81,7 +75,13 @@ func show_text(new_card, newcardtype, card_drawn_name):
 	new_card.get_node(str("Transform/HealthText" + newcardtype)).visible = true
 	new_card.get_node(str("Transform/Mana" + newcardtype)).visible = true
 	new_card.get_node(str("Transform/AbilityText" + newcardtype)).visible = false
-	new_card.get_node("CardImage").texture = load(str("res://CardSprites/Cards_" + card_drawn_name + ".png"))
+	if ResourceLoader.exists("res://CardSprites/Cards_" + card_drawn_name + ".png"):
+		new_card.get_node("CardImage").texture = load(str("res://CardSprites/Cards_" + card_drawn_name + ".png"))
+	else:
+		var card_image_path = str("res://CardSprites/Cards_back.png")
+		new_card.get_node(str("Transform/AbilityText" + newcardtype)).text = new_card.name
+		new_card.get_node(str("Transform/AbilityText" + newcardtype)).visible = true
+		new_card.get_node("CardImage").texture = load(card_image_path)
 	$"../BattleManager".update_attack_label(new_card)
 	new_card.get_node(str("Transform/HealthText" + newcardtype)).text = str(new_card.health)
 	new_card.get_node(str("Transform/Mana" + newcardtype)).text = str(new_card.mana)

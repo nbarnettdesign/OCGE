@@ -79,7 +79,7 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	"script": "res://Scripts/Abilities/Monster_LiteralFire.gd",
 	"tags": ["Fire", "Nature"],
 	"attacks": [
-		{"name": "Burn", "cost": 1, "damage": 20, "effect": "ability_one"},
+		{"name": "Burn", "cost": 1, "damage": 20, "effect": "ability_one", "inflicts": ["burned"]},
 		{"name": "Wildfire", "cost": 4, "damage": 99999, "effect": "ability_two"},
 	]},
 
@@ -88,7 +88,7 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	"tags": ["Human", "Humanoid", "Mushroom"],
 	"script": "res://Scripts/Abilities/Monster_Mushroomhands.gd",
 	"attacks": [
-		{"name": "Spore", "cost": 1, "damage": 5, "effect": "ability_one"},
+		{"name": "Spore", "cost": 1, "damage": 5, "effect": "ability_one", "inflicts": ["stun"]},
 	]},
 	
 	"PunchSnake" = {"name": "Punch Snake", "attack": 30, "health": 80, "type": "Monster", "mana": 1, "ability_text": null,
@@ -106,25 +106,9 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 		{"name": "Bite", "cost": 1, "damage": 15},
 		{"name": "SonicBlast", "cost": 3, "damage": 50},
 	]},
-	
-	"KnightDuty" = {"name": "Knightly Duty", "attack": 10, "health": 80, "type": "Monster", "mana": 2, "ability_text": null,
-	"script": "res://Scripts/Abilities/Monster_KnightDuty.gd",
-	"ai_role": "defender", "keywords": ["taunt"],
-	"tags": ["Human", "Knight"],
-	"attacks": [{"name": "Shield Bash", "cost": 1, "damage": 10}]},
 
-	"KnightArcher" = {"name": "Knight Archer", "attack": 10, "health": 50, "type": "Monster", "mana": 2, "ability_text": null,
-	"script": "res://Scripts/Abilities/Monster_KnightArcher.gd",
-	"keywords": ["reach"],
-	"tags": ["Human", "Knight"],
-	"attacks": [{"name": "Arrow", "cost": 1, "damage": 15}]},
-
-	"ToxicToad" = {"name": "Toxic Toad", "attack": 5, "health": 50, "type": "Monster", "mana": 2, "ability_text": null,
-	"script": "res://Scripts/Abilities/Monster_ToxicToad.gd",
-	"tags": ["Animal", "Frog", "Poison"],
-	"attacks": [{"name": "Spit", "cost": 1, "damage": 5, "effect": "ability_one"}]},
 	
-	#Magic=================================================================
+	#====================================Magic==================================
 	"BuffTree" = {"name": "Buff Tree", "attack": 3, "health": 4, "type": "Magic", "mana": 4, "ability_text": null,
 	"script": "res://Scripts/Abilities/Magic_BuffTree.gd",
 	"tags": ["Plant", "Nature", "Tree"],
@@ -137,7 +121,7 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	"script": "res://Scripts/Abilities/Magic_Clown.gd",
 	"attacks": [
 	{"name": "Attack", "cost": 0, "damage": "attack"},
-	{"name": "Pocket Sand", "cost": 0, "damage": 0, "effect": "ability_one"},
+	{"name": "Pocket Sand", "cost": 0, "damage": 0, "effect": "ability_one", "inflicts": ["Blind"]},
 	]},
 	
 	"FlowerFields" = {"name": "Flower Fields", "attack": 10, "health": 10, "type": "Magic", "mana": 3, "ability_text": null,
@@ -158,7 +142,7 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	"tags": ["Animal", "Alligator", "Fire"],
 	"script": "res://Scripts/Abilities/Magic_FireAlligator.gd",
 	"attacks": [
-		{"name": "Burn", "cost": 0, "damage": 1, "effect": "ability_one"},
+		{"name": "Burn", "cost": 0, "damage": 1, "effect": "ability_one", "inflicts": ["burned"]},
 	]},
 	
 	"Pencil" = {"name": "Pencil with an Eraser", "attack": 1, "health": 5, "type": "Magic", "mana": 4, "ability_text": null,
@@ -211,13 +195,53 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	"attacks": [{"name": "Attack", "cost": 0, "damage": "attack"},]},
 	
 	"ManaMonster" = {"name": "Mana Monster", "attack": 1, "health": 1, "type": "Magic", "mana": 0, "ability_text": "Use Mana",
-	"script": "res://Scripts/Abilities/Magic_ManaMonster.gd",
+	"script": "res://Scripts/Abilities/Magic_ManaMonster.gd","hidden": true,
 	"tags": ["Mana", "Playing Card", "Token"],
 	"attacks": [{"name": "Attack", "cost": 0, "damage": "attack"},
 		{"name": "Mana", "cost": 0, "damage": 0, "effect": "toggle_mana", "target": "none"},]},
 	
-	"SoapSuds" = {"name": "Soap Suds", "attack": 0, "health": 3, "type": "Magic", "mana": 2, "ability_text": null,
-	"ai_role": "protected",
+	
+	
+	#=====================TEST CARDS=================================
+	
+	"KnightDuty" = {"name": "Knightly Duty", "attack": 10, "health": 800, "type": "Monster", "mana": 1, "ability_text": null,
+	"script": "res://Scripts/Abilities/Monster_KnightDuty.gd","hidden": true,
+	"ai_role": "defender", "keywords": ["taunt"],
+	"tags": ["Human", "Knight"],
+	"attacks": [{"name": "Shield Bash", "cost": 1, "damage": 10}]},
+
+	"KnightArcher" = {"name": "Knight Archer", "attack": 10, "health": 500, "type": "Monster", "mana": 1, "ability_text": null,
+	"script": "res://Scripts/Abilities/Monster_KnightArcher.gd","hidden": true,
+	"keywords": ["reach"],
+	"tags": ["Human", "Knight"],
+	"attacks": [{"name": "Arrow", "cost": 1, "damage": 15}]},
+
+	"ToxicToad" = {"name": "Toxic Toad", "attack": 5, "health": 500, "type": "Monster", "mana": 1, "ability_text": null,
+	"script": "res://Scripts/Abilities/Monster_ToxicToad.gd",
+	"tags": ["Animal", "Frog", "Poison"],
+	"attacks": [{"name": "Spit", "cost": 1, "damage": 5, "effect": "ability_one", "inflicts": ["poisoned"]}]},
+	
+	"QuickdrawKid" = {"name": "Quickdraw Kid", "attack": 15, "health": 400, "type": "Monster", "mana": 1, "ability_text": null,
+	"keywords": ["haste"],
+	"tags": ["Human", "Cowboy"],
+	"attacks": [{"name": "Quick Shot", "cost": 1, "damage": 15}]},
+
+	"SmokeWisp" = {"name": "Smoke Wisp", "attack": 10, "health": 300, "type": "Monster", "mana": 2, "ability_text": null,
+	"keywords": ["invisible"],
+	"tags": ["Spooky", "Ninja"],
+	"attacks": [{"name": "Nip", "cost": 1, "damage": 10}]},
+
+	"KnightJouster" = {"name": "Knight Jouster", "attack": 20, "health": 700, "type": "Monster", "mana": 3, "ability_text": null,
+	"keywords": ["trample"],
+	"tags": ["Human", "Knight"],
+	"attacks": [{"name": "Charge", "cost": 2, "damage": 250}]},
+
+	"SledgehammerSam" = {"name": "Sledgehammer Sam", "attack": 0, "health": 800, "type": "Monster", "mana": 3, "ability_text": null,
+	"tags": ["Human", "Brawler"],
+	"attacks": [{"name": "Crush", "cost": 2, "damage": 1, "crush": true}]},
+	
+	"SoapSuds" = {"name": "Soap Suds", "attack": 0, "health": 300, "type": "Magic", "mana": 2, "ability_text": null,
+	"ai_role": "protected","hidden": true,
 	"tags": ["Clean"],
 	"script": "res://Scripts/Abilities/Magic_SoapSuds.gd",
 	"attacks": [
@@ -225,8 +249,8 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 		{"name": "Scrub", "cost": 0, "damage": 0, "effect": "ability_one", "target": "any"},
 	]},
 
-	"CarWash" = {"name": "Car Wash", "attack": 0, "health": 3, "type": "Magic", "mana": 3, "ability_text": null,
-	"ai_role": "protected",
+	"CarWash" = {"name": "Car Wash", "attack": 0, "health": 300, "type": "Magic", "mana": 3, "ability_text": null,
+	"ai_role": "protected","hidden": true,
 	"tags": ["Clean"],
 	"script": "res://Scripts/Abilities/Magic_CarWash.gd",
 	"attacks": [
@@ -235,17 +259,17 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	]},
 	
 	"ZombieToken" = {"name": "Zombie", "attack": 2, "health": 1, "type": "Magic", "mana": 0, "ability_text": null,
-	"token": true,
+	"token": true,"hidden": true,
 	"tags": ["Spooky", "Zombie", "Token"],
 	"attacks": [{"name": "Bite", "cost": 0, "damage": "attack"}]},
 
 	"RatToken" = {"name": "Rat", "attack": 1, "health": 1, "type": "Magic", "mana": 0, "ability_text": null,
-	"token": true,
+	"token": true,"hidden": true,
 	"tags": ["Animal", "Rat", "Token"],
 	"attacks": [{"name": "Nibble", "cost": 0, "damage": "attack"}]},
 
-	"Gravedigger" = {"name": "Gravedigger", "attack": 1, "health": 3, "type": "Magic", "mana": 2, "ability_text": null,
-	"ai_role": "protected",
+	"Gravedigger" = {"name": "Gravedigger", "attack": 1, "health": 300, "type": "Magic", "mana": 2, "ability_text": null,
+	"ai_role": "protected","hidden": true,
 	"tags": ["Human", "Spooky"],
 	"script": "res://Scripts/Abilities/Magic_Gravedigger.gd",
 	"attacks": [
@@ -253,16 +277,14 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 		{"name": "Raise", "cost": 0, "damage": 0, "effect": "ability_one", "target": "none"},
 	]},
 
-	"Prankster" = {"name": "Prankster", "attack": 1, "health": 3, "type": "Magic", "mana": 3, "ability_text": null,
-	"ai_role": "protected",
+	"Prankster" = {"name": "Prankster", "attack": 1, "health": 300, "type": "Magic", "mana": 3, "ability_text": null,
+	"ai_role": "protected","hidden": true,
 	"tags": ["Human"],
 	"script": "res://Scripts/Abilities/Magic_Prankster.gd",
 	"attacks": [
 		{"name": "Attack", "cost": 0, "damage": "attack"},
 		{"name": "Prank", "cost": 0, "damage": 0, "effect": "ability_one", "target": "none"},
 	]},
-	
-	
 	
 	#====================Sports===================================
 	"EllenBells" = [64, 1, "Sport", 4, 

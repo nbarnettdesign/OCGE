@@ -44,6 +44,7 @@ var played_magic_card_this_turn = false
 var selected_monster
 var hoveredcard
 var menu_leave_timer = 0.0
+var hover_target = null
 
 var player_active_mana = 0
 var player_active_mana_cards = 0
@@ -72,7 +73,7 @@ func _ready() -> void:
 		attack_buttons[i].mouse_entered.connect(func(): mouse_over_attack_menu = true)
 		attack_buttons[i].mouse_exited.connect(func(): mouse_over_attack_menu = false)
 	setup_hint_label()
-
+	_style_attack_buttons()
 
 
 func _process(delta: float) -> void:
@@ -96,6 +97,8 @@ func _process(delta: float) -> void:
 			menu_leave_timer += delta
 			if menu_leave_timer > 0.15:
 				hide_attack_menu()
+	if attack_menu.visible and is_instance_valid(attack_menu_card):
+		place_attack_menu(attack_menu_card)
 
 func pick_card(exclude):
 	pick_exclude = exclude
@@ -224,6 +227,7 @@ func finish_drag():
 			if card_being_dragged.card_type == "Monster" or card_being_dragged.card_type == "Magic":
 				if card_being_dragged.card_type == "Monster" && monsters_played_this_turn < GameState.rules["monsters_per_turn"]:
 					$"../BattleManager".trigger_hook(card_being_dragged, "on_played")
+					Audio.play("place")
 					player_hand_reference.remove_card_from_hand(card_being_dragged)
 					#Card being dragged, drop into empty card slot
 					card_being_dragged.position = card_slot_found.position
@@ -237,6 +241,7 @@ func finish_drag():
 					card_being_dragged = null
 				elif card_being_dragged.card_type == "Magic" && player_active_mana_cards >= card_being_dragged.mana:
 					$"../BattleManager".trigger_hook(card_being_dragged, "on_played")
+					Audio.play("place")
 					player_hand_reference.remove_card_from_hand(card_being_dragged)
 					#Card being dragged, drop into empty card slot
 					card_being_dragged.position = card_slot_found.position
@@ -584,9 +589,34 @@ func on_hovered_off_card(card):
 				try_show_hover_menu(new_card_hovered)
 			else:
 				is_hovering_over_card = false
+	else:
+		highlight_card(card, false)
+	hover_target = null
 	
 
+func _style_attack_buttons():
+	var clear = StyleBoxEmpty.new()
+	var hover = StyleBoxFlat.new()
+	hover.bg_color = Color(1, 1, 1, 0.18)
+	hover.set_corner_radius_all(4)
+	var off = StyleBoxFlat.new()
+	off.bg_color = Color(0, 0, 0, 0.3)          # dims an unavailable move but keeps it readable
+	off.set_corner_radius_all(4)
+	for button in attack_buttons:
+		button.add_theme_stylebox_override("normal", clear)
+		button.add_theme_stylebox_override("hover", hover)
+		button.add_theme_stylebox_override("pressed", hover)
+		button.add_theme_stylebox_override("focus", clear)
+		button.add_theme_stylebox_override("disabled", off)
+		for color_name in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color"]:
+			button.add_theme_color_override(color_name, Color(1, 1, 1))
+		button.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.9))
+		button.add_theme_constant_override("outline_size", 6)
+
 func highlight_card(card, hovered):
+	if hover_target != card && hover_target != null:
+		on_hovered_off_card(hover_target)
+		hover_target = card
 	if card == block_prompt_card and not hovered:
 		return
 	if card == attack_menu_card:
@@ -665,9 +695,11 @@ func show_attack_menu(card):
 				button.visible = false   # passive moves only show during a prompt, and only they do
 				continue
 			var label = atk["name"] + " (" + str(atk["cost"]) + ")"
+			var show_text = show_button_text
 			if atk.get("effect", "") == "toggle_mana":
 				label = "Stop Using Mana" if card.mana_selected else "Use Mana"
-			button.text = label if show_button_text else ""
+				show_text = true
+			button.text = label if show_text else ""
 			button.disabled = not $"../BattleManager".can_use_attack(card, atk)
 			button.visible = true
 		else:
@@ -849,6 +881,7 @@ func finish_mana_drag():
 	if moved:
 		var tween = get_tree().create_tween()
 		tween.tween_property(mana, "position", origin, 0.1)
+		Audio.play("place")
 	else:
 		mana.position = origin
 		toggle_mana_selection(mana)   # it was a click, not a drag

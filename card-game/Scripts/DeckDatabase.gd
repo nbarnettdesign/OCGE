@@ -10,6 +10,8 @@ var manadeck = ["Clubs02", "Clubs03", "Clubs04", "Clubs05", "Clubs06", "Clubs07"
 
 var defaultDeck = ["ChunkyPig", "FireAlligator", "SonicBat", "JumpMan", "LiteralFire", "JimFast", "JustinMcelroy", "MushroomHands"]
 
+var testDeck = ["Gravedigger", "Prankster", "SoapSuds", "CarWash", "KnightDuty", "KnightArcher", "ToxicToad", "QuickdrawKid", "SmokeWisp", "KnightJouster", "SledgehammerSam"]
+
 var deck1 = ["SwordGuy", "SkeletonCowboy", "ShieldGirl", "FireAlligator", "BuffTree", "Dendoko", "SonicBat",
  "PunchSnake", "ChunkyPig", "LiteralFire", "JimFast", "LionForest", "EllenBells", "TimothyJones", "JustinMcelroy"]
 

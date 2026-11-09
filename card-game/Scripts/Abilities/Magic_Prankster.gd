@@ -2,7 +2,7 @@ extends CardAbility
 
 func ability_one(_target):
 	var b = battle()
-	b.spawn_card("RatToken", _enemy_of(b.owner_of(card)))
+	b.spawn_card("PinataToken", _enemy_of(b.owner_of(card)))
 
 func ai_ability_score(_move_index, _target):
 	var b = battle()

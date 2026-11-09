@@ -26,6 +26,7 @@ var pending = Callable()       # what to do if the confirm dialog is accepted
 
 
 func _ready():
+	Audio.play_music("menu")
 	continue_button.pressed.connect(_on_continue)
 	saves_button.pressed.connect(func(): _show(saves_panel))
 	new_game_button.pressed.connect(_on_new_game)

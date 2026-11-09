@@ -41,7 +41,7 @@ var page = 0
 @onready var page_label = %PageLabel
 @onready var sleeve_menu = %SleeveMenu
 @onready var sleeve_preview = %SleevePreview
-
+@onready var collection_label = %CollectionLabel
 
 var deck_cards = []        # the deck being edited
 var type_filter = "All"
@@ -49,6 +49,7 @@ var deck_rows = []         # card name behind each row of deck_list
 
 
 func _ready():
+	Audio.play_music("menu")
 	if GameState.binder_origin in ["duel_screen", "gameover"]:
 		npc_menu.visible = false
 		npc_info.visible = false
@@ -202,11 +203,20 @@ func _refresh_collection():
 		card.custom_minimum_size = card_size
 		card.setup(card_name, GameState.collection[card_name], counts.get(card_name, 0),
 			GameState.MAX_COPIES, _art(card_name))
+		card.set_new(GameState.new_cards.has(card_name))
 		card.chosen.connect(_preview)
-		card.hovered.connect(_preview)
+		card.hovered.connect(_on_card_hover.bind(card))
 	page_label.text = "Page %d / %d" % [page + 1, pages]
 	prev_button.disabled = page <= 0
 	next_button.disabled = page >= pages - 1
+	collection_label.text = "Collected %d / %d" % [GameState.collected_count(), GameState.collectible_cards().size()]
+
+func _on_card_hover(card_name, card):
+	_preview(card_name)
+	if GameState.new_cards.has(card_name):
+		GameState.new_cards.erase(card_name)       # seen it now
+		card.set_new(false)
+
 
 func _refresh_sleeves():
 	sleeve_menu.clear()
@@ -401,6 +411,7 @@ func _on_npc_selected(index):
 	var text = "%s\n%s\nDifficulty: %s" % [npc["name"], npc.get("intro", ""), npc.get("difficulty", "?")]
 	for line in BoardRules.describe(npc.get("rules", [])):
 		text += "\n" + line
+		text += "\nWins: %d" % int(GameState.win_counts.get(id, 0))
 	npc_info.text = text
 
 

@@ -108,7 +108,7 @@ func _bad(text):
 func _changed(text):
 	GameState.save_game()
 	var scene = get_tree().current_scene
-	for method in ["_refresh", "_refresh_sleeves"]:
+	for method in ["_refresh", "_refresh_sleeves", "_refresh_saved_decks"]:
 		if scene and scene.has_method(method):
 			scene.call(method)
 	_say(text, Color.LIGHT_GREEN)
@@ -165,7 +165,7 @@ func _find_card(text):
 
 
 func _is_collectible(card):
-	return not CARD_DATABASE.get_card(card).get("token", false) and card != "ManaMonster"
+	return card in GameState.collectible_cards()
 
 
 func _give(args, sign):
@@ -183,7 +183,6 @@ func _give(args, sign):
 	else:
 		GameState.collection[card] = now
 	_changed("%s now has %d copies." % [card, now])
-
 
 func _allcards(args):
 	var count = int(args[0]) if args.size() > 0 and args[0].is_valid_int() else GameState.MAX_COPIES

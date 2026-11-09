@@ -230,6 +230,15 @@ offset_top = 436.0
 offset_right = 1065.0
 offset_bottom = 504.0
 
+[node name="CollectionLabel" type="Label" parent="." unique_id=838749003]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 397.0
+offset_top = 20.0
+offset_right = 535.0
+offset_bottom = 88.0
+theme_type_variation = &"TitleLabel"
+
 [node name="SleeveMenu" type="OptionButton" parent="." unique_id=1647139542]
 unique_name_in_owner = true
 layout_mode = 0

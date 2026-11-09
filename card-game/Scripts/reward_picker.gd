@@ -47,7 +47,9 @@ func choose(options, title = "Choose your reward"):
 		entries.append({"name": card_name, "card": card})
 	get_tree().paused = true
 	if deck_pile:
-		deck_pile.texture = sleeve
+		for layer in get_children():
+			if str(layer.name).begins_with("DeckPile") and sleeve:
+				layer.texture = sleeve
 	else:
 		print("RewardPicker: add a TextureRect named DeckPile (unique name) to show the deck")
 	await get_tree().process_frame               # let the row lay itself out
@@ -112,7 +114,7 @@ func _pull_cards(entries, sleeve):
 		for entry in entries:
 			entry["card"].modulate.a = 1.0
 		return
-	var from = deck_pile.get_global_rect().get_center()
+	var from = _pile_center()
 	var last = null
 	for i in entries.size():
 		var card = entries[i]["card"]
@@ -150,6 +152,7 @@ func _reveal(proxy, card):
 	proxy.queue_free()
 	card.scale.x = 0.0
 	card.modulate.a = 1.0
+	Audio.play("flip")
 
 
 # the card you took stays; the others turn face-down and slide back into the deck
@@ -158,7 +161,7 @@ func _put_back(entries, chosen, sleeve):
 		entry["card"].mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if deck_pile == null or sleeve == null:
 		return
-	var to = deck_pile.get_global_rect().get_center()
+	var to = _pile_center()
 	for entry in entries:
 		var card = entry["card"]
 		var t = create_tween()
@@ -174,6 +177,8 @@ func _put_back(entries, chosen, sleeve):
 			t.parallel().tween_property(proxy, "scale", Vector2(0.4, 0.4), 0.35)
 	await get_tree().create_timer(0.75, true).timeout
 
+func _pile_center():
+	return deck_pile.get_global_transform() * (deck_pile.size / 2.0)    # accounts for the rotation
 
 func _turn_face_down(proxy, card):
 	card.modulate.a = 0.0

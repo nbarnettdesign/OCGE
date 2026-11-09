@@ -40,10 +40,12 @@ func show_result(new_result, new_title, new_reason):
 	message_label.text = title + "\n" + reason
 	if sleeve_name != "":
 		message_label.text += "\nNew card sleeve unlocked: " + sleeve_name
+		Audio.play("unlock")
 	reward_choices = GameState.reward_options() if won else []
 	rewards_button.visible = won
 	rewards_button.disabled = false
 	rewards_button.text = "Get my rewards" if not reward_choices.is_empty() else "Continue"
+	Audio.play("win" if won else "lose")
 	for c in [play_again_button, deck_menu, binder_button, give_up_button]:
 		c.visible = not won
 	if error_label:

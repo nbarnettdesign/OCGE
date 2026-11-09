@@ -12,6 +12,7 @@ static func apply_data(card, card_name):
 	card.card_type = data["type"]
 	card.mana = data["mana"]
 	card.ability = data["ability_text"]
+	
 	var script_path = data.get("script")
 	if script_path:
 		var ability = load(script_path).new()
@@ -27,6 +28,7 @@ static func apply_data(card, card_name):
 	card.set_meta("keywords", data.get("keywords", []))
 	card.set_meta("card_name", card_name)
 	card.set_meta("tags", CARD_DATABASE.get_card(card_name).get("tags", []))
+	card.set_meta("token", data.get("token", false))
 
 static func attack_nodes(card, card_type):
 	if card_type == "Monster":

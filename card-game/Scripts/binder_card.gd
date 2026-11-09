@@ -14,6 +14,7 @@ var card_name = ""
 @onready var name_label = %NameLabel
 @onready var info_label = %InfoLabel
 
+var badge = null
 
 func _ready():
 	pressed.connect(func(): chosen.emit(card_name))
@@ -50,3 +51,28 @@ func _get_drag_data(_at_position):
 
 func set_info(text):
 	info_label.text = text
+
+func set_new(on):
+	if not on:
+		if badge:
+			badge.queue_free()
+			badge = null
+		return
+	if badge:
+		return
+	badge = Label.new()
+	badge.text = "NEW"
+	badge.add_theme_font_size_override("font_size", 16)
+	badge.add_theme_color_override("font_color", Color(0.12, 0.08, 0.02))
+	badge.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0))
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.95, 0.78, 0.30)
+	style.set_corner_radius_all(6)
+	style.content_margin_left = 6
+	style.content_margin_right = 6
+	style.content_margin_top = 1
+	style.content_margin_bottom = 1
+	badge.add_theme_stylebox_override("normal", style)
+	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(badge)
+	badge.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 4)
