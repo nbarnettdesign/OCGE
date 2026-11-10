@@ -300,8 +300,9 @@ func spawn_card(card_name, side, slot = null, play_hook = false):
 		deck.show_text(card, card.card_type, card_name)
 		update_attack_label(card)
 	else:                                  # no art yet: the same placeholder the decks use
-		card.get_node("Attack").text = "!"
-		card.get_node("Health").text = "!"
+		print("Card:",card_name)
+		card.get_node("Attack").text = ""
+		card.get_node("Health").text = ""
 		card.get_node("CardImage").texture = load("res://CardSprites/Cards_back.png")
 	$"../CardManager".add_child(card)
 	card.name = "Card"

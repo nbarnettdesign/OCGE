@@ -135,7 +135,8 @@ func card_clicked(card):
 			and card in $"../BattleManager".player_cards_on_battlefield \
 			and not $"../BattleManager".player_is_attacking:
 		var chosen = selected_monster.attacks[selected_monster.selected_attack]
-		if chosen.get("target", "enemy") == "any":
+		var mode = chosen.get("target", "enemy")
+		if mode == "any" or (mode == "enemy" and $"../BattleManager".has_keyword(card, "neutral")):
 			$"../BattleManager".attack(selected_monster, card, "Player")
 			return
 	if card != attack_menu_card and card != selected_monster:
@@ -533,17 +534,23 @@ func on_right_click_released():
 		card.scale = Vector2(BIGGER_CARD_SCALE, BIGGER_CARD_SCALE)
 		card.z_index = 2
 
+func is_above(a, b):
+	if a.z_index != b.z_index:
+		return a.z_index > b.z_index
+	return a.get_index() > b.get_index()
+
 func raycast_check_for_opponent_card():
 	var space_state = get_world_2d().direct_space_state
 	var parameters = PhysicsPointQueryParameters2D.new()
 	parameters.position = get_global_mouse_position()
 	parameters.collide_with_areas = true
+	var best = null
 	for r in space_state.intersect_point(parameters, 8):
 		if r.collider.collision_mask == 8:
 			var c = r.collider.get_parent()
-			if c.card_slot_card_is_in:       # only cards on the field, never the hidden hand
-				return c
-	return null
+			if c.card_slot_card_is_in and (best == null or is_above(c, best)):    # only cards on the field
+				best = c
+	return best
 
 func _show_effects(card, on):
 	if is_instance_valid(card):
@@ -664,16 +671,12 @@ func raycast_check_for_card():
 
 
 func get_card_with_highest_z_index(cards):
-	#assume first passed is first
-	var highest_z_card = cards[0].collider.get_parent()
-	var highest_z_index = highest_z_card.z_index
-	
+	var best = cards[0].collider.get_parent()
 	for i in range(1, cards.size()):
-		var current_card = cards[i].collider.get_parent()
-		if current_card.z_index > highest_z_index:
-			highest_z_card = current_card
-			highest_z_index = current_card.z_index
-	return highest_z_card
+		var current = cards[i].collider.get_parent()
+		if is_above(current, best):
+			best = current
+	return best
 
 func reset_played_cards():
 	monsters_played_this_turn = 0

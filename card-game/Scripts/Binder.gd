@@ -50,10 +50,7 @@ var deck_rows = []         # card name behind each row of deck_list
 
 func _ready():
 	Audio.play_music("menu")
-	if GameState.binder_origin in ["duel_screen", "gameover"]:
-		npc_menu.visible = false
-		npc_info.visible = false
-		battle_button.visible = false
+	_update_debug_widgets()
 	for t in TYPE_FILTERS:
 		filter_menu.add_item(t)
 	filter_menu.item_selected.connect(_on_filter_selected)
@@ -69,7 +66,7 @@ func _ready():
 		npc_menu.add_item(NPCDatabase.NPCS[id]["name"])
 		var index = npc_menu.item_count - 1
 		npc_menu.set_item_metadata(index, id)
-		if id == GameState.current_npc:
+		if id == GameState.current_npc and GameState.binder_origin in ["duel_screen", "gameover"]:
 			selected_npc_index = index
 	npc_menu.select(selected_npc_index)
 	npc_menu.item_selected.connect(_on_npc_selected)
@@ -110,6 +107,11 @@ func _ready():
 func _is_working_origin():
 	return GameState.binder_origin in ["duel_screen", "gameover"]
 
+func _update_debug_widgets():
+	var show_picker = GameState.debug_binder_opponents and not _is_working_origin()
+	npc_menu.visible = show_picker
+	npc_info.visible = show_picker
+	battle_button.visible = show_picker
 
 # true when the deck in the editor differs from what's saved under its name
 func _has_changes():

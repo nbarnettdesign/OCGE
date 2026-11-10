@@ -31,7 +31,7 @@ const NPCS = {
 		"name": "Tester", "intro": "Cheap tricks and a big red nose.",
 		"dialogue": ["Ten clowns and a dream.", "player: I count four.", "...Four clowns and a dream."],
 		"win_dialogue": ["Okay, okay. Take a trick. I've got more."],
-		"deck": "testDeck", "rules": ["standard"], "difficulty": "EASY",
+		"deck": "testDeck", "rules": ["standard"], "difficulty": "NORMAL",
 		"faction": "circus",
 		"sleeve_reward": "party",
 		"rewards": {"repeatable": true, "cards": ["Clown", "SpaceMonkey", "Pebble", "FireAlligator", "JustinMcelroy"]},

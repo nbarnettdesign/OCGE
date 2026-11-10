@@ -48,7 +48,7 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	"script": "res://Scripts/Abilities/Monster_ChunkyPig.gd",
 	"attacks": [
 		{"name": "RollOver", "cost": 1, "damage": 15},
-		{"name": "FeedingFrenzy", "cost": 3, "damage": 30, "effect": "ability_two"},
+		{"name": "FeedingFrenzy", "cost": 3, "damage": 30, "effect": "ability_two", "heals": 20},
 	]},
 	
 	"Dendoko" = {"name": "Dendoko", "attack": 0, "health": 30, "type": "Monster", "mana": 1, "ability_text": null,
@@ -117,11 +117,10 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 	
 	"Clown" = {"name": "Clown", "attack": 1, "health": 3, "type": "Magic", "mana": 1, "ability_text": null,
 	"ai_role": "protected",
-	"tags": ["Human", "Humanoid", "Clown"],
+	"tags": ["Human", "Clown"],
 	"script": "res://Scripts/Abilities/Magic_Clown.gd",
 	"attacks": [
-	{"name": "Attack", "cost": 0, "damage": "attack"},
-	{"name": "Pocket Sand", "cost": 0, "damage": 0, "effect": "ability_one", "inflicts": ["Blind"]},
+		{"name": "Pocket Sand", "cost": 0, "damage": "attack", "effect": "ability_one", "inflicts": ["blinded"]},
 	]},
 	
 	"FlowerFields" = {"name": "Flower Fields", "attack": 10, "health": 10, "type": "Magic", "mana": 3, "ability_text": null,
@@ -285,6 +284,12 @@ const CARDS = { #Attack, Health, Type, Mana, Ability Text, Ability script
 		{"name": "Attack", "cost": 0, "damage": "attack"},
 		{"name": "Prank", "cost": 0, "damage": 0, "effect": "ability_one", "target": "none"},
 	]},
+	
+	"PinataToken" = {"name": "PinataToken", "attack": 0, "health": 1, "type": "Magic", "mana": 0, "ability_text": null,
+	"token": true, "hidden": true, "keywords": ["neutral"],
+	"tags": ["Token", "Party"],
+	"script": "res://Scripts/Abilities/Magic_Pinata.gd",
+	"attacks": []},
 	
 	#====================Sports===================================
 	"EllenBells" = [64, 1, "Sport", 4, 

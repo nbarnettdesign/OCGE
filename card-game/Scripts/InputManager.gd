@@ -41,15 +41,28 @@ func raycast_at_cursor():
 	parameters.position = get_global_mouse_position()
 	parameters.collide_with_areas = true
 	var result = space_state.intersect_point(parameters)
-	if result.size() > 0:
-		var result_collision_mask = result[0].collider.collision_mask
-		if result_collision_mask == COLLISION_MASK_CARD:
-			#card clicked
-			var card_found = result[0].collider.get_parent()
-			if card_found:
-				card_manager_reference.card_clicked(card_found)
-		elif result_collision_mask == COLLISION_MASK_DECK:
-			#Deck Clicked
+	if result.size() == 0:
+		return
+	# the card drawn on top wins, not whichever the physics engine lists first
+	var top = null
+	var top_mask = 0
+	for r in result:
+		var mask = r.collider.collision_mask
+		if mask != COLLISION_MASK_CARD and mask != COLLISION_MASK_OPPONENT_CARD:
+			continue
+		var c = r.collider.get_parent()
+		if mask == COLLISION_MASK_OPPONENT_CARD and not c.card_slot_card_is_in:
+			continue                              # hidden hand cards can't be clicked
+		if top == null or card_manager_reference.is_above(c, top):
+			top = c
+			top_mask = mask
+	if top != null:
+		if top_mask == COLLISION_MASK_CARD:
+			card_manager_reference.card_clicked(top)
+		else:
+			$"../BattleManager".opponent_card_selected(top)
+		return
+	for r in result:
+		if r.collider.collision_mask == COLLISION_MASK_DECK:
 			deck_reference.draw_card()
-		elif result_collision_mask == COLLISION_MASK_OPPONENT_CARD:
-			$"../BattleManager".opponent_card_selected(result[0].collider.get_parent())
+			return

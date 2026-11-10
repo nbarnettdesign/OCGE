@@ -47,6 +47,7 @@ var npc_deck_choice = {}   # npc id -> name of the deck they're locked to
 var world_scene = "TestOverworldLevel"              # the map you were last on
 var world_position = Vector2.ZERO
 var has_world_position = false
+var debug_binder_opponents = false 
 
 func _ready():
 	get_tree().node_added.connect(_on_node_added)
@@ -59,6 +60,7 @@ func _ready():
 	autosave.autostart = true
 	autosave.timeout.connect(save_game)
 	add_child(autosave)
+	
 # ---------- Settings ----------
 
 func load_settings():

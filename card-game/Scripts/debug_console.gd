@@ -137,6 +137,7 @@ func _run(cmd, args):
 		"draw": _draw(args)
 		"save": _changed("Saved.")
 		"clear": output.clear()
+		"binder": _binder(args)
 		_: _bad("Unknown command: " + cmd + " (type help)")
 
 
@@ -294,6 +295,16 @@ func _battle():
 	var scene = get_tree().current_scene
 	return scene.get_node_or_null("BattleManager") if scene else null
 
+
+func _binder(args):
+	if args.size() > 0 and args[0].to_lower() == "pickopponent":
+		GameState.debug_binder_opponents = not GameState.debug_binder_opponents
+		var scene = get_tree().current_scene
+		if scene and scene.has_method("_update_debug_widgets"):
+			scene.call("_update_debug_widgets")
+		_say("Binder opponent picker %s." % ("ON" if GameState.debug_binder_opponents else "OFF"), Color.LIGHT_GREEN)
+	else:
+		_bad("Try: binder pickopponent")
 
 func _end_battle(player_wins):
 	var bm = _battle()

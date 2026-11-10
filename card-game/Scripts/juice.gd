@@ -247,15 +247,23 @@ func _wait_tween(t, state):
 		
 # the card's picture as a screen rectangle (follows scale and rotation)
 func card_rect(card):
-	var img = card.get_node_or_null("CardImage")
-	if img == null:
+	var rect = null
+	for node in card.find_children("*", "CanvasItem", true, false):
+		if not (node is Sprite2D or node is TextureRect) or not node.is_visible_in_tree():
+			continue
+		if node.get("texture") == null:
+			continue
+		var local = Rect2(Vector2.ZERO, node.size) if node is Control else node.get_rect()
+		var xf = node.get_global_transform_with_canvas()
+		var r = Rect2(xf * local.position, Vector2.ZERO)
+		for corner in [Vector2(local.end.x, local.position.y), local.end, Vector2(local.position.x, local.end.y)]:
+			r = r.expand(xf * corner)
+		if r.size.x < 40.0 or r.size.y < 40.0:
+			continue                                # skip small icons such as attached energy
+		rect = r if rect == null else rect.merge(r)
+	if rect == null:
 		var p = _screen_pos(card)
 		return Rect2(p - Vector2(60, 85), Vector2(120, 170))
-	var local = Rect2(Vector2.ZERO, img.size) if img is Control else img.get_rect()
-	var xf = img.get_global_transform_with_canvas()
-	var rect = Rect2(xf * local.position, Vector2.ZERO)
-	for corner in [Vector2(local.end.x, local.position.y), local.end, Vector2(local.position.x, local.end.y)]:
-		rect = rect.expand(xf * corner)
 	return rect
 
 

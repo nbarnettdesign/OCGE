@@ -98,6 +98,11 @@ func _draw_attack(source):
 			lines.append(["+ " + STATUS_NAMES.get(effect, str(effect).capitalize()), VALID])
 		_outline(hover, color, 0.95)
 		_label(hover, lines)
+		var heal_amount = int(move.get("heals", 0))
+		if heal_amount > 0:
+			var gain = mini(heal_amount, source.max_health - source.health)
+			if gain > 0:
+				_label(source, [["+%d" % gain, Color(0.4, 1.0, 0.5)]])
 	_arrow(Juice.card_rect(source).get_center(), end, color)
 
 
